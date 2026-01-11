@@ -64,12 +64,12 @@ class AuthController extends Controller
         switch ($user->rol)
         {
             case 'administrador':
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('dashboard.administrador');
             case 'repartidor':
-                return redirect()->route('repartidor.dashboard');
+                return redirect()->route('dashboard.repartidor');
             case 'cliente':
             default:
-                return redirect()->route('cliente.dashboard');
+                return redirect()->route('dashboard.cliente');
         }
     }
 

@@ -74,7 +74,7 @@
                     <span class="sidebar-text">Usuarios</span>
                 </a>
 
-                <a href="{{ route('productos.index') }}"
+                <a href="{{ route('productos.admin.index') }}"
                    class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 {{ request()->routeIs('productos.*') ? 'active-nav' : '' }}">
                     <i class="fas fa-wine-bottle w-6"></i>
                     <span class="sidebar-text">Productos</span>
@@ -96,8 +96,8 @@
                     @endif
                 </a>
 
-                <a href="{{ route('deliverys.index') }}"
-                   class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 {{ request()->routeIs('deliverys.*') ? 'active-nav' : '' }}">
+                <a href="{{ route('deliveries.index') }}"
+                   class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800 {{ request()->routeIs('deliveries.*') ? 'active-nav' : '' }}">
                     <i class="fas fa-motorcycle w-6"></i>
                     <span class="sidebar-text">Repartidores</span>
                 </a>

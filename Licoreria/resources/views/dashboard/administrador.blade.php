@@ -67,7 +67,7 @@
                     <i class="fas fa-exclamation-triangle text-purple-600 text-xl"></i>
                 </div>
             </div>
-            <a href="{{ route('productos.index') }}?stock=bajo" class="text-blue-600 text-sm mt-2 hover:underline">
+            <a href="{{ route('productos.admin.index') }}?stock=bajo" class="text-blue-600 text-sm mt-2 hover:underline">
                 Reabastecer →
             </a>
         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
 {
@@ -13,8 +14,28 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::all();
-        return view('productos.index', compact('productos'));
+        $user = Auth::user();
+
+        if (in_array($user->rol, ['administrador', 'repartidor'])) {
+            $productos = Producto::paginate(10);
+            return view('productos.admin-index', compact('productos'));
+        }
+
+        $productos = Producto::where('activo', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('productos.cliente-index', compact('productos'));
+    }
+
+    // Catalogo para los clientes
+    public function catalogo()
+    {
+        $productos = Producto::where('activo', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('productos.catalogo', compact('productos'));
     }
 
     /**
@@ -22,6 +43,11 @@ class ProductoController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        if (!in_array($user->rol, ['administrador', 'repartidor'])) {
+            abort(403, 'No tienes permiso para crear productos');
+        }
+
         return view('productos.create');
     }
 
@@ -54,7 +80,15 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        return view('productos.show', compact('producto'));
+        $user = Auth::user();
+
+        // Si es admin o repartidor, usar vista de admin
+        if (in_array($user->rol, ['administrador', 'repartidor'])) {
+            return view('productos.admin-show', compact('producto'));
+        }
+
+        // Si es cliente, usar vista de cliente
+        return view('productos.cliente-show', compact('producto'));
     }
 
     /**
@@ -62,6 +96,11 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
+        $user = Auth::user();
+        if (!in_array($user->rol, ['administrador', 'repartidor'])) {
+            abort(403, 'No tienes permiso para editar productos');
+        }
+
         return view('productos.edit', compact('producto'));
     }
 

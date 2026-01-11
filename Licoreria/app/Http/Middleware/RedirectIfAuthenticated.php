@@ -25,8 +25,8 @@ class RedirectIfAuthenticated
                 $user = Auth::guard($guard)->user();
 
                 return match($user->rol) {
-                    'admin' => redirect()->route('dashboard.admin'),
-                    'repartidor' => redirect()->route('dashboard.delivery'),
+                    'administrador' => redirect()->route('dashboard.administrador'),
+                    'repartidor' => redirect()->route('dashboard.repartidor'),
                     default => redirect()->route('dashboard.cliente'),
                 };
             }
