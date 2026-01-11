@@ -23,9 +23,20 @@ Route::middleware('guest')->group(function() {
 });
 
 // Rutas protegidas
+Route::middleware('auth')->group(function() {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
- // ? CRUD de Productos - SEPARADO POR ROLES
-Route::middleware('auth')->group(function () {
+    // Dashboards por rol
+    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('dashboard.administrador')->middleware('role:administrador');
+    Route::get('/delivery/dashboard', [DashboardController::class, 'delivery'])->name('dashboard.repartidor')->middleware('role:repartidor');
+    Route::get('/cliente/dashboard', [DashboardController::class, 'cliente'])->name('dashboard.cliente')->middleware('role:cliente');
+
+    // CRUD de usuarios que solo puede hacer el administrador
+    Route::resource('usuarios', UsuarioController::class)->middleware('role:administrador');
+
+    // CRUD de productos
+    Route::resource('productos', ProductoController::class)->middleware('role:administrador,repartidor');
+    Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index')->middleware('role:cliente');
     // PRODUCTOS PARA CLIENTES (catálogo)
     Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
     // PRODUCTOS PARA ADMIN/REPARTIDOR (gestión)
@@ -42,24 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/productos/{producto}', [ProductoController::class, 'show'])
         ->name('productos.show')
         ->middleware('role:cliente');
-});
 
-Route::middleware('auth')->group(function() {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-    // Dashboards por rol
-    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('dashboard.administrador')->middleware('role:administrador');
-    Route::get('/delivery/dashboard', [DashboardController::class, 'delivery'])->name('dashboard.repartidor')->middleware('role:repartidor');
-    Route::get('/cliente/dashboard', [DashboardController::class, 'cliente'])->name('dashboard.cliente')->middleware('role:cliente');
-
-    // CRUD de usuarios que solo puede hacer el administrador
-    Route::resource('usuarios', UsuarioController::class)->middleware('role:administrador');
-    // CRUD de productos
-    Route::resource('productos', ProductoController::class)->middleware('role:administrador,repartidor');
-    //Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index')->middleware('role:cliente');
-
-
-
+    // CRUD de pedidos
     Route::resource('pedidos', PedidoController::class);
     Route::post('/pedidos/{pedido}/cambiar-estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiarEstado');
     Route::resource('deliveries', DeliveryController::class)->middleware('role:administrador');
