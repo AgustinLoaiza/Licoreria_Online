@@ -13,7 +13,7 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        $deliveries = Delivery::with('usuario')->get();
+        $deliveries = Delivery::with('usuario')->paginate(10);
         return view('deliveries.index', compact('deliveries'));
     }
 
@@ -22,7 +22,7 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        $usuarios = Usuario::where('rol', 'repartidor')->wheredoesntHave('delivery')->get();
+        $usuarios = Usuario::where('rol', 'repartidor')->wheredoesntHave('delivery')->paginate(10);
         return view('deliveries.create', compact('usuarios'));
     }
 

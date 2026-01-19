@@ -40,7 +40,7 @@
             </div>
 
             <div class="flex space-x-3">
-                <form action="{{ route('deliverys.update', $delivery) }}" method="POST">
+                <form action="{{ route('deliveries.update', $delivery) }}" method="POST">
                     @csrf @method('PUT')
                     @if($delivery->estado == 'disponible')
                     <input type="hidden" name="estado" value="inactivo">

@@ -20,11 +20,11 @@ class PedidoController extends Controller
         $user = Auth::user();
 
         if ($user->rol === 'administrador') {
-            $pedidos = Pedido::where('usuario_id', $user->id)->get();
+            $pedidos = Pedido::where('usuario_id', $user->id)->paginate(10);
         } elseif ($user->rol === 'repartidor') {
-            $pedidos = Pedido::where('delivery_id', $user->id)->get();
+            $pedidos = Pedido::where('delivery_id', $user->id)->paginate(10);
         } else {
-            $pedidos = Pedido::with(['usuario', 'delivery'])->get();
+            $pedidos = Pedido::with(['usuario', 'delivery'])->paginate(10);
         }
 
         return view('pedidos.index', compact('pedidos'));

@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/cliente/dashboard', [DashboardController::class, 'cliente'])->name('dashboard.cliente')->middleware('role:cliente');
 
     // CRUD de usuarios que solo puede hacer el administrador
-    Route::resource('usuarios', UsuarioController::class)->middleware('role:administrador');
+    Route::resource('usuarios', UsuarioController::class)->middleware('role:administrador,cliente,repartidor');
 
     // CRUD de productos
     Route::resource('productos', ProductoController::class)->middleware('role:administrador,repartidor');

@@ -34,7 +34,7 @@
             <div>
                 <select id="filterRol" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Todos los roles</option>
-                    <option value="admin" {{ request('rol') == 'admin' ? 'selected' : '' }}>Administrador</option>
+                    <option value="administrador" {{ request('rol') == 'administrador' ? 'selected' : '' }}>Administrador</option>
                     <option value="cliente" {{ request('rol') == 'cliente' ? 'selected' : '' }}>Cliente</option>
                     <option value="repartidor" {{ request('rol') == 'repartidor' ? 'selected' : '' }}>Repartidor</option>
                 </select>
@@ -111,10 +111,10 @@
                         <!-- Columna Rol -->
                         <td class="px-6 py-4">
                             <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
-                                {{ $usuario->rol == 'admin' ? 'bg-purple-100 text-purple-800' :
+                                {{ $usuario->rol == 'administrador' ? 'bg-purple-100 text-purple-800' :
                                    ($usuario->rol == 'repartidor' ? 'bg-green-100 text-green-800' :
                                    'bg-blue-100 text-blue-800') }}">
-                                <i class="fas fa-{{ $usuario->rol == 'admin' ? 'crown' :
+                                <i class="fas fa-{{ $usuario->rol == 'administrador' ? 'crown' :
                                                    ($usuario->rol == 'repartidor' ? 'motorcycle' : 'user') }} mr-1"></i>
                                 {{ ucfirst($usuario->rol) }}
                             </span>

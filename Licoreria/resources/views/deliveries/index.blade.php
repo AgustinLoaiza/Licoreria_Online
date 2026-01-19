@@ -84,7 +84,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse($deliverys as $delivery)
+                    @forelse($deliveries as $delivery)
                     <tr class="hover:bg-gray-50">
                         <!-- Columna Repartidor -->
                         <td class="px-6 py-4">
@@ -163,13 +163,13 @@
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">
                                 <!-- Ver -->
-                                <a href="{{ route('deliverys.show', $delivery) }}"
+                                <a href="{{ route('deliveries.show', $delivery) }}"
                                    class="text-blue-600 hover:text-blue-900" title="Ver">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 <!-- Editar -->
-                                <a href="{{ route('deliverys.edit', $delivery) }}"
+                                <a href="{{ route('deliveries.edit', $delivery) }}"
                                    class="text-yellow-600 hover:text-yellow-900" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -195,7 +195,7 @@
 
         <!-- Paginación -->
         <div class="px-6 py-4 border-t">
-            {{ $deliverys->links('components.pagination') }}
+            {{ $deliveries->links('components.pagination') }}
         </div>
     </div>
 </div>
@@ -209,7 +209,7 @@
         showConfirmModal(
             '¿Eliminar repartidor?',
             `¿Estás seguro de eliminar al repartidor "${nombre}"? Esta acción no se puede deshacer.`,
-            `/deliverys/${id}`
+            `/deliveries/${id}`
         );
     }
 </script>

@@ -11,10 +11,45 @@ class VentaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ventas = Venta::with('pedido.usuario')->get();
-        return view('ventas.index', compact('ventas'));
+        // Estadísticas
+        $total_ventas = Pedido::where('estado', 'pagado')->sum('monto_total');
+        $ventas_hoy = Pedido::where('estado', 'pagado')->whereDate('created_at', today())->sum('monto_total');
+        $ventas_count_hoy = Venta::where('estado', 'pagado')->whereDate('created_at', today())->count();
+        $pagos_pendientes = Venta::where('estado', 'pendiente')->count();
+        $ventas_verificadas = Venta::where('estado', 'verificado')->count();
+        $total_verificadas = Pedido::where('estado', 'verificado')->sum('monto_total');
+
+        // Filtros y paginación
+        $query = Venta::with('pedido.usuario');
+
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+        if ($request->filled('metodo')) {
+            $query->where('metodo_pago', $request->metodo);
+        }
+        if ($request->filled('fecha')) {
+            $query->whereDate('created_at', $request->fecha);
+        }
+        if ($request->filled('search')) {
+            $query->whereHas('pedido.usuario', function($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $ventas = $query->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('ventas.index', compact(
+            'total_ventas',
+            'ventas_hoy',
+            'ventas_count_hoy',
+            'pagos_pendientes',
+            'ventas_verificadas',
+            'total_verificadas',
+            'ventas'
+        ));
     }
 
     /**

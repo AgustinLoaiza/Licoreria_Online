@@ -1,8 +1,8 @@
-@extends(Auth::user()->rol === 'admin' ? 'layouts.admin' : (Auth::user()->rol === 'repartidor' ? 'layouts.repartidor' : 'layouts.cliente'))
+@extends(Auth::user()->rol === 'administrador' ? 'layouts.admin' : (Auth::user()->rol === 'repartidor' ? 'layouts.repartidor' : 'layouts.cliente'))
 
 @section('title', 'Pedidos - Licorería')
 
-@if(Auth::user()->rol === 'admin')
+@if(Auth::user()->rol === 'administrador')
     @section('page-title', 'Gestión de Pedidos')
     @section('page-description', 'Administra todos los pedidos del sistema')
 @elseif(Auth::user()->rol === 'repartidor')
@@ -34,7 +34,7 @@
     @endif
 
     <!-- Filtros -->
-    @if(Auth::user()->rol === 'admin' || Auth::user()->rol === 'repartidor')
+    @if(Auth::user()->rol === 'administrador' || Auth::user()->rol === 'repartidor')
     <div class="bg-white rounded-xl shadow p-4">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <!-- Filtro por estado -->
@@ -58,7 +58,7 @@
             </div>
 
             <!-- Búsqueda (solo admin) -->
-            @if(Auth::user()->rol === 'admin')
+            @if(Auth::user()->rol === 'administrador')
             <div>
                 <input type="text"
                        id="searchInput"
