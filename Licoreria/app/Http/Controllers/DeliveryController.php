@@ -32,11 +32,25 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id|unique:deliveries,usuario_id',
-            'estado' => 'required|in:disponible,ocupado,inactivo',
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuarios,email',
+            'password' => 'required|string|min:8|confirmed',
+            'telefono' => 'nullable|string|max:20',
+            'rol' => 'required|in:repartidor',
         ]);
 
-        Delivery::create($validated);
+        $usuario = Usuario::create([
+            'nombre' => $validated['nombre'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'telefono' => $validated['telefono'] ?? null,
+            'rol' => 'repartidor',
+        ]);
+
+        Delivery::create([
+            'usuario_id' => $usuario->id,
+            'estado' => 'disponible',
+        ]);
 
         return redirect()->route('deliveries.index')->with('success', 'Repartidor creado exitosamente.');
     }
@@ -64,10 +78,24 @@ class DeliveryController extends Controller
     public function update(Request $request, Delivery $delivery)
     {
         $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuarios,email,' . $delivery->usuario_id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'telefono' => 'nullable|string|max:20',
             'estado' => 'required|in:disponible,ocupado,inactivo',
         ]);
 
-        $delivery->update($validated);
+        $usuario = $delivery->usuario;
+        $usuario->nombre = $validated['nombre'];
+        $usuario->email = $validated['email'];
+        if (!empty($validated['password'])) {
+            $usuario->password = bcrypt($validated['password']);
+        }
+        $usuario->telefono = $validated['telefono'] ?? $usuario->telefono;
+        $usuario->save();
+
+        $delivery->estado = $validated['estado'];
+        $delivery->save();
 
         return redirect()->route('deliveries.index')->with('success', 'Repartidor actualizado exitosamente.');
     }
