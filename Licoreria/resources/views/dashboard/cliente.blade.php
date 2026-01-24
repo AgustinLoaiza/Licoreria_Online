@@ -145,7 +145,7 @@
                             <span class="font-mono">#{{ str_pad($pedido->id, 6, '0', STR_PAD_LEFT) }}</span>
                         </td>
                         <td class="py-3">
-                            {{ $pedido->fecha_pedido->format('d/m/Y H:i') }}
+                            {{ $pedido->fecha_pedido ? $pedido->fecha_pedido->format('d/m/Y H:i') : '-' }}
                         </td>
                         <td class="py-3">
                             <span class="font-semibold">S/ {{ number_format($pedido->monto_total, 2) }}</span>

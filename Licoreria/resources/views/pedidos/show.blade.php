@@ -1,8 +1,8 @@
-@extends(Auth::user()->rol === 'admin' ? 'layouts.admin' : (Auth::user()->rol === 'repartidor' ? 'layouts.repartidor' : 'layouts.cliente'))
+@extends(Auth::user()->rol === 'administrador' ? 'layouts.admin' : (Auth::user()->rol === 'repartidor' ? 'layouts.repartidor' : 'layouts.cliente'))
 
 @section('title', 'Pedido #' . str_pad($pedido->id, 6, '0', STR_PAD_LEFT))
 
-@if(Auth::user()->rol === 'admin')
+@if(Auth::user()->rol === 'administrador')
     @section('page-title', 'Detalle del Pedido')
 @elseif(Auth::user()->rol === 'repartidor')
     @section('page-title', 'Detalle de Entrega')
@@ -24,7 +24,7 @@
                 </h2>
                 <p class="text-gray-600">
                     <i class="far fa-clock mr-1"></i>
-                    {{ $pedido->fecha_pedido->format('d/m/Y H:i') }}
+                    {{ $pedido->fecha_pedido ? $pedido->fecha_pedido->format('d/m/Y H:i') : '-' }}
                 </p>
             </div>
 
@@ -387,7 +387,7 @@
                             </div>
                             <div>
                                 <p class="font-medium text-gray-800">Pedido creado</p>
-                                <p class="text-sm text-gray-600">{{ $pedido->fecha_pedido->format('d/m/Y H:i') }}</p>
+                                <p class="text-sm text-gray-600">{{ $pedido->fecha_pedido ? $pedido->fecha_pedido->format('d/m/Y H:i') : '-' }}</p>
                             </div>
                         </div>
 
@@ -398,7 +398,7 @@
                             </div>
                             <div>
                                 <p class="font-medium text-gray-800">Pago {{ $pedido->venta->estado }}</p>
-                                <p class="text-sm text-gray-600">{{ $pedido->venta->fecha_pago->format('d/m/Y H:i') }}</p>
+                                <p class="text-sm text-gray-600">{{ $pedido->venta->fecha_pago ? $pedido->venta->fecha_pago->format('d/m/Y H:i') : '-' }}</p>
                             </div>
                         </div>
                         @endif
@@ -410,7 +410,7 @@
                             </div>
                             <div>
                                 <p class="font-medium text-gray-800">Pedido entregado</p>
-                                <p class="text-sm text-gray-600">{{ $pedido->updated_at->format('d/m/Y H:i') }}</p>
+                                <p class="text-sm text-gray-600">{{ $pedido->updated_at ? $pedido->updated_at->format('d/m/Y H:i') : '-' }}</p>
                             </div>
                         </div>
                         @endif

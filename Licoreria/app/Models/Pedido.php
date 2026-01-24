@@ -36,7 +36,7 @@ class Pedido extends Model
         return $this->belongsTo(Delivery::class, 'delivery_id');
     }
 
-    public function detallePedidos()
+    public function detalles()
     {
         return $this->hasMany(Detalle_pedido::class, 'pedido_id');
     }

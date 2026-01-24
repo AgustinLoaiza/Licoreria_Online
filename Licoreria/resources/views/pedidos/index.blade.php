@@ -94,7 +94,7 @@
                         </h3>
                         <p class="text-gray-600">
                             <i class="far fa-clock mr-1"></i>
-                            {{ $pedido->fecha_pedido->format('d/m/Y H:i') }}
+                            {{ $pedido->fecha_pedido ? $pedido->fecha_pedido->format('d/m/Y H:i') : '-' }}
                         </p>
                     </div>
 

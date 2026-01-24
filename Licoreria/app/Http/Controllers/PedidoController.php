@@ -20,7 +20,7 @@ class PedidoController extends Controller
         $user = Auth::user();
 
         if ($user->rol === 'administrador') {
-            $pedidos = Pedido::where('usuario_id', $user->id)->paginate(10);
+            $pedidos = Pedido::with(['usuario', 'delivery'])->paginate(10);
         } elseif ($user->rol === 'repartidor') {
             $pedidos = Pedido::where('delivery_id', $user->id)->paginate(10);
         } else {
@@ -47,6 +47,12 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
+        if (is_string($request->productos)) {
+            $request->merge([
+                'productos' => json_decode($request->productos, true)
+            ]);
+        }
+
         $validated = $request->validate([
             'usuario_id' => 'required|exists:usuarios,id',
             'delivery_id' => 'nullable|exists:deliveries,id',

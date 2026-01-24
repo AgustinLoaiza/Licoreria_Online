@@ -116,7 +116,7 @@
                                     </div>
                                     <div>
                                         <p class="font-medium">{{ $pedido->usuario->nombre }}</p>
-                                        <p class="text-xs text-gray-500">{{ $pedido->fecha_pedido->format('d/m H:i') }}</p>
+                                        <p class="text-xs text-gray-500">{{ $pedido->fecha_pedido ? $pedido->fecha_pedido->format('d/m H:i') : '-' }}</p>
                                     </div>
                                 </div>
                             </td>

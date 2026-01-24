@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,11 +57,16 @@ Route::middleware('auth')->group(function() {
 
     // CRUD de pedidos
     Route::resource('pedidos', PedidoController::class);
-    Route::post('/pedidos/{pedido}/cambiar-estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiarEstado');
+    Route::post('/pedidos/{pedido}/cambiar-estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar-estado');
     Route::resource('deliveries', DeliveryController::class)->middleware('role:administrador');
     Route::resource('ventas', VentaController::class)->middleware('role:administrador');
     Route::post('/ventas/{venta}/subir-comprobante', [VentaController::class, 'subirComprobante'])->name('ventas.subirComprobante')->middleware('role:cliente');
     Route::post('/ventas/{venta}/verificar', [VentaController::class, 'verificarPago'])->name('ventas.verificar')->middleware('role:administrador');
+
+    // Reportes
+    Route::get('/ventas-diarias', [ReporteController::class, 'ventasDiarias'])->name('reportes.ventas_diarias');
+    Route::get('/inventario', [ReporteController::class, 'inventario'])->name('reportes.inventario');
+    Route::get('/estadisticas', [ReporteController::class, 'estadisticas'])->name('reportes.estadisticas');
 
     Route::get('/', function() {
         if (!Auth::check()) {
