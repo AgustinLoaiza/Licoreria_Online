@@ -1,4 +1,7 @@
-@extends(Auth::user()->rol === 'administrador' ? 'layouts.admin' : (Auth::user()->rol === 'repartidor' ? 'layouts.admin' : 'layouts.cliente'))
+@extends(
+    Auth::user()->rol === 'administrador' ? 'layouts.admin' :
+    (Auth::user()->rol === 'repartidor' ? 'layouts.repartidor' : 'layouts.cliente')
+)
 
 @section('title', $usuario->nombre . ' - Licorería')
 
@@ -20,7 +23,7 @@
                 <p class="text-gray-600">ID: USR-{{ str_pad($usuario->id, 6, '0', STR_PAD_LEFT) }}</p>
             </div>
 
-            @if(Auth::user()->rol === 'administrador' || Auth::user()->rol === 'repartidor')
+            @if(Auth::user()->rol === 'administrador')
             <div class="flex space-x-2">
                 <a href="{{ route('usuarios.edit', $usuario->id) }}"
                    class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 flex items-center">
@@ -93,14 +96,23 @@
                         </div>
                     </div>
 
-                    <!-- Para clientes: botón para editar perfil -->
+                    <!-- Para clientes y repartidores: botón para editar perfil -->
                     @if(Auth::user()->rol === 'cliente' && Auth::user()->id === $usuario->id)
-                    <div>
-                        <a href="{{ route('usuarios.edit', $usuario->id) }}"
-                           class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 flex items-center">
-                            <i class="fas fa-user-edit mr-2"></i> Editar mi perfil
-                        </a>
-                    </div>
+                        <div>
+                            <a href="{{ route('cliente.perfil.edit') }}"
+                            class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 flex items-center">
+                                <i class="fas fa-user-edit mr-2"></i> Editar mi perfil
+                            </a>
+                        </div>
+                    @endif
+
+                    @if(Auth::user()->rol === 'repartidor' && Auth::user()->id === $usuario->id)
+                        <div>
+                            <a href="{{ route('repartidor.perfil.edit') }}"
+                               class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 flex items-center">
+                                <i class="fas fa-user-edit mr-2"></i> Editar mi perfil
+                            </a>
+                        </div>
                     @endif
                 </div>
             </div>
@@ -109,10 +121,11 @@
 
     <!-- Botón Volver -->
     <div class="mt-6">
-        <a href="{{ route('usuarios.index') }}"
-           class="inline-flex items-center text-blue-600 hover:text-blue-800">
-            <i class="fas fa-arrow-left mr-2"></i> Volver a la lista
+        <a href="{{Auth::user()->rol === 'administrador' ? route('usuarios.index') :
+            (Auth::user()->rol === 'repartidor' ? route('dashboard.repartidor') : route('dashboard.cliente'))}}" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+        <i class="fas fa-arrow-left mr-2"></i> Volver al menú principal
         </a>
+
     </div>
 </div>
 @endsection

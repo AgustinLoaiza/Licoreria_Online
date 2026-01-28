@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
@@ -76,11 +77,73 @@ class UsuarioController extends Controller
 
         if ($request->filled('password')) {
             $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
         }
 
         $usuario->update($validated);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado exitosamente.');
+    }
+
+    // TODO Edicion para el perfil del cliente
+    public function editPerfilCliente()
+    {
+        $usuario = Auth::user();
+        return view('usuarios.edit_cliente', compact('usuario'));
+    }
+
+    public function updatePerfilCliente(Request $request)
+    {
+        $usuario = Auth::user();
+
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:usuarios,email,' . $usuario->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'telefono' => 'nullable|string|max:20',
+            // No se permite cambiar el rol aquí
+        ]);
+
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        $usuario->update($validated);
+
+        return redirect()->route('dashboard.cliente')->with('success', 'Perfil actualizado exitosamente.');
+    }
+
+    // TODO Edicion para el perfil del repartidor
+    public function editPerfilRepartidor()
+    {
+        $usuario = Auth::user();
+        return view('usuarios.edit_repartidor', compact('usuario'));
+    }
+
+    public function updatePerfilRepartidor(Request $request)
+    {
+        $usuario = Auth::user();
+
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:usuarios,email,' . $usuario->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'telefono' => 'nullable|string|max:20',
+            // No se permite cambiar el rol aquí
+        ]);
+
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        $usuario->update($validated);
+
+        return redirect()->route('dashboard.repartidor')->with('success', 'Perfil actualizado exitosamente.');
     }
 
     /**

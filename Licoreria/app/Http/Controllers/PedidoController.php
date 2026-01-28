@@ -7,6 +7,7 @@ use App\Models\Producto;
 use App\Models\Usuario;
 use App\Models\Delivery;
 use App\Models\Detalle_pedido;
+use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,7 @@ class PedidoController extends Controller
         } elseif ($user->rol === 'repartidor') {
             $pedidos = Pedido::where('delivery_id', $user->id)->paginate(10);
         } else {
-            $pedidos = Pedido::with(['usuario', 'delivery'])->paginate(10);
+            $pedidos = Pedido::where('usuario_id', $user->id)->with(['usuario', 'delivery'])->orderBy('created_at', 'desc')->paginate(10);
         }
 
         return view('pedidos.index', compact('pedidos'));
@@ -70,6 +71,13 @@ class PedidoController extends Controller
             'direccion' => $validated['direccion'],
             'estado' => 'pendiente',
             'monto_total' => 0,
+        ]);
+
+        Venta::create([
+            'pedido_id' => $pedido->id,
+            'metodo_pago' => $request->metodo_pago,
+            'estado' => 'pendiente',
+            'fecha_pago' => null,
         ]);
 
         $total = 0;

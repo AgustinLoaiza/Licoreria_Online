@@ -45,7 +45,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Pagos por Verificar</p>
-                    <p class="text-3xl font-bold text-gray-800">{{ $pagos_pendientes ?? 0 }}</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ $pagos_pendientes->count() ?? 0 }}</p>
                 </div>
                 <div class="bg-red-100 p-3 rounded-full">
                     <i class="fas fa-qrcode text-red-600 text-xl"></i>

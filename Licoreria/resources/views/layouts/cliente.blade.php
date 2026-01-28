@@ -50,8 +50,8 @@
                         <i class="fas fa-home mr-2"></i>Inicio
                     </a>
 
-                    <a href="{{ route('productos.index') }}"
-                       class="text-gray-700 hover:text-red-600 {{ request()->routeIs('productos.index') ? 'text-red-600 font-semibold' : '' }}">
+                    <a href="{{ route('productos.catalogo') }}"
+                       class="text-gray-700 hover:text-red-600 {{ request()->routeIs('productos.catalogo') ? 'text-red-600 font-semibold' : '' }}">
                         <i class="fas fa-store mr-2"></i>Catálogo
                     </a>
 

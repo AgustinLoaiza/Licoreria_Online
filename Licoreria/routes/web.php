@@ -34,10 +34,17 @@ Route::middleware('auth')->group(function() {
 
     // CRUD de usuarios que solo puede hacer el administrador
     Route::resource('usuarios', UsuarioController::class)->middleware('role:administrador,cliente,repartidor');
+    // Perfil de cliente
+    Route::get('/perfil', [UsuarioController::class, 'editPerfilCliente'])->name('cliente.perfil.edit')->middleware('role:cliente');
+    Route::put('/perfil', [UsuarioController::class, 'updatePerfilCliente'])->name('cliente.perfil.update')->middleware('role:cliente');
+
+    // Perfil de repartidor
+    Route::get('/repartidor/perfil', [UsuarioController::class, 'editPerfilRepartidor'])->name('repartidor.perfil.edit')->middleware('role:repartidor');
+    Route::put('/repartidor/perfil', [UsuarioController::class, 'updatePerfilRepartidor'])->name('repartidor.perfil.update')->middleware('role:repartidor');
 
     // CRUD de productos
     Route::resource('productos', ProductoController::class)->middleware('role:administrador,repartidor');
-    Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index')->middleware('role:cliente');
+    //!Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index')->middleware('role:cliente');
     // PRODUCTOS PARA CLIENTES (catálogo)
     Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
     // PRODUCTOS PARA ADMIN/REPARTIDOR (gestión)
@@ -45,14 +52,15 @@ Route::middleware('auth')->group(function() {
         Route::get('/productos', [ProductoController::class, 'index'])->name('productos.admin.index');
         Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
         Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
-        Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
+        //Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
+        Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])->name('productos.catalogo.show');
         Route::get('/productos/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.edit');
         Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
         Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
     });
     // PRODUCTOS PARA CLIENTES (vista individual)
-    Route::get('/productos/{producto}', [ProductoController::class, 'show'])
-        ->name('productos.show')
+    Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])
+        ->name('productos.catalogo.show')
         ->middleware('role:cliente');
 
     // CRUD de pedidos
@@ -60,7 +68,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/pedidos/{pedido}/cambiar-estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar-estado');
     Route::resource('deliveries', DeliveryController::class)->middleware('role:administrador');
     Route::resource('ventas', VentaController::class)->middleware('role:administrador');
-    Route::post('/ventas/{venta}/subir-comprobante', [VentaController::class, 'subirComprobante'])->name('ventas.subirComprobante')->middleware('role:cliente');
+    Route::post('/ventas/{venta}/subir-comprobante', [VentaController::class, 'subirComprobante'])->name('ventas.subir-comprobante')->middleware('role:cliente');
     Route::post('/ventas/{venta}/verificar', [VentaController::class, 'verificarPago'])->name('ventas.verificar')->middleware('role:administrador');
 
     // Reportes

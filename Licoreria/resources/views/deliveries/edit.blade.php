@@ -1,4 +1,7 @@
-@extends('layouts.admin')
+@extends(
+    Auth::user()->rol === 'administrador' ? 'layouts.admin' :
+    (Auth::user()->rol === 'repartidor' ? 'layouts.repartidor' : 'layouts.cliente')
+)
 
 @section('title', 'Editar Repartidor')
 @section('page-title', 'Editar Repartidor: ' . $delivery->usuario->nombre)

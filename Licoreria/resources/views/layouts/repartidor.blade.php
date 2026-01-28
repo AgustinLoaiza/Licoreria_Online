@@ -79,9 +79,6 @@
                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                                         <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
                                     </a>
-                                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                        <i class="fas fa-history mr-2"></i>Historial
-                                    </a>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
