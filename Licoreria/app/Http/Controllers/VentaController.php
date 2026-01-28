@@ -152,6 +152,6 @@ class VentaController extends Controller
             'fecha_pago' => now(),
         ]);
 
-        return back()->with('success', 'Pago verificado exitosamente.');
+        return response()->json(['success' => 'Pago verificado exitosamente.']);
     }
 }

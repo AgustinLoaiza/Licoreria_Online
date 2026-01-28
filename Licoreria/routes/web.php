@@ -43,8 +43,8 @@ Route::middleware('auth')->group(function() {
     Route::put('/repartidor/perfil', [UsuarioController::class, 'updatePerfilRepartidor'])->name('repartidor.perfil.update')->middleware('role:repartidor');
 
     // CRUD de productos
-    Route::resource('productos', ProductoController::class)->middleware('role:administrador,repartidor');
-    //!Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index')->middleware('role:cliente');
+    Route::resource('productos', ProductoController::class)->middleware('role:administrador,cliente,repartidor');
+    //Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index')->middleware('role:cliente'); //! Error de duplicado
     // PRODUCTOS PARA CLIENTES (catálogo)
     Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
     // PRODUCTOS PARA ADMIN/REPARTIDOR (gestión)
@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/productos', [ProductoController::class, 'index'])->name('productos.admin.index');
         Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
         Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
-        //Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
+        Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
         Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])->name('productos.catalogo.show');
         Route::get('/productos/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.edit');
         Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
@@ -62,6 +62,14 @@ Route::middleware('auth')->group(function() {
     Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])
         ->name('productos.catalogo.show')
         ->middleware('role:cliente');
+
+    // ? PRUEBA DE RUTAS DE PRODUCTOS SIMPLIFICADAS
+    // CRUD de productos SOLO para admin y repartidor
+    // Route::resource('productos', ProductoController::class)->middleware('role:administrador,cliente,repartidor');
+
+    // // Catálogo para clientes
+    // Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+    // Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])->name('productos.catalogo.show');
 
     // CRUD de pedidos
     Route::resource('pedidos', PedidoController::class);

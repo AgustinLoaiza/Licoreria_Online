@@ -35,7 +35,7 @@ class ProductoController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 
-        return view('productos.catalogo', compact('productos'));
+        return view('productos.cliente-index', compact('productos'));
     }
 
     // TODO Mostrar catalogo
@@ -93,7 +93,7 @@ class ProductoController extends Controller
 
         // Si es admin o repartidor, usar vista de admin
         if (in_array($user->rol, ['administrador', 'repartidor'])) {
-            return view('productos.admin-show', compact('producto'));
+            return view('productos.show', compact('producto'));
         }
 
         // Si es cliente, usar vista de cliente
