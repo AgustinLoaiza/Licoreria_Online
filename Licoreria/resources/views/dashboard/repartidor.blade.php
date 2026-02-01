@@ -40,10 +40,10 @@
             </div>
 
             <div class="flex space-x-3">
-                <form action="{{ route('deliveries.update', $delivery) }}" method="POST">
+                <form action="{{ route('deliveries.cambiar-estado', $delivery) }}" method="POST">
                     @csrf @method('PUT')
                     @if($delivery->estado == 'disponible')
-                    <input type="hidden" name="estado" value="inactivo">
+                    <input type="hidden" name="estado" value="ocupado">
                     <button type="submit"
                             class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">
                         <i class="fas fa-power-off mr-2"></i>Desactivar
@@ -113,17 +113,10 @@
                                 <i class="fas fa-map"></i>
                             </button>
 
-                            @if($pedido->estado == 'confirmado')
-                            <button onclick="cambiarEstadoPedido({{ $pedido->id }}, 'en_camino')"
-                                    class="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-700">
-                                <i class="fas fa-play mr-1"></i>Iniciar Entrega
-                            </button>
-                            @endif
-
-                            @if($pedido->estado == 'en_camino')
+                            @if($pedido->estado == 'enviado')
                             <button onclick="cambiarEstadoPedido({{ $pedido->id }}, 'entregado')"
-                                    class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-700">
-                                <i class="fas fa-check mr-1"></i>Marcar Entregado
+                                    class="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-700">
+                                <i class="fas fa-play mr-1"></i>Marcar como Entregado
                             </button>
                             @endif
 
@@ -160,7 +153,7 @@
                 <div class="flex items-center justify-between p-3 border rounded-lg">
                     <div>
                         <p class="font-medium text-gray-800">#{{ str_pad($pedido->id, 6, '0', STR_PAD_LEFT) }}</p>
-                        <p class="text-sm text-gray-600">{{ $pedido->fecha_pedido->format('d/m H:i') }}</p>
+                        <p class="text-sm text-gray-600">{{ $pedido->fecha_pedido ? $pedido->fecha_pedido->format('d/m H:i') : '-' }}</p>
                     </div>
                     <div class="text-right">
                         <p class="font-semibold">S/ {{ number_format($pedido->monto_total, 2) }}</p>

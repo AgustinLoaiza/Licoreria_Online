@@ -42,9 +42,7 @@
                 <select id="filterEstado" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Todos los estados</option>
                     <option value="pendiente">Pendiente</option>
-                    <option value="confirmado">Confirmado</option>
-                    <option value="en_preparacion">En preparación</option>
-                    <option value="en_camino">En camino</option>
+                    <option value="enviado">Enviado</option>
                     <option value="entregado">Entregado</option>
                     <option value="cancelado">Cancelado</option>
                 </select>
@@ -236,33 +234,12 @@
                         </a>
 
                         <!-- Acciones específicas por rol -->
-                        @if(Auth::user()->rol === 'admin')
-                            @if($pedido->estado == 'pendiente')
-                            <button onclick="cambiarEstado({{ $pedido->id }}, 'confirmado')"
-                                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
-                                <i class="fas fa-check mr-2"></i> Confirmar
-                            </button>
-                            @endif
+                        @if(Auth::user()->rol === 'administrador')
 
-                            @if(in_array($pedido->estado, ['pendiente', 'confirmado', 'en_preparacion']))
+                            @if(in_array($pedido->estado, ['pendiente', 'confirmado', 'enviado']))
                             <button onclick="cambiarEstado({{ $pedido->id }}, 'cancelado')"
                                     class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center">
                                 <i class="fas fa-times mr-2"></i> Cancelar
-                            </button>
-                            @endif
-
-                        @elseif(Auth::user()->rol === 'repartidor')
-                            @if($pedido->estado == 'confirmado')
-                            <button onclick="cambiarEstado({{ $pedido->id }}, 'en_camino')"
-                                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center">
-                                <i class="fas fa-play mr-2"></i> Iniciar Entrega
-                            </button>
-                            @endif
-
-                            @if($pedido->estado == 'en_camino')
-                            <button onclick="cambiarEstado({{ $pedido->id }}, 'entregado')"
-                                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
-                                <i class="fas fa-check mr-2"></i> Marcar Entregado
                             </button>
                             @endif
                         @endif

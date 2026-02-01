@@ -74,10 +74,18 @@ Route::middleware('auth')->group(function() {
     // CRUD de pedidos
     Route::resource('pedidos', PedidoController::class);
     Route::post('/pedidos/{pedido}/cambiar-estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar-estado');
+
+    Route::put('/deliveries/{delivery}/cambiar-estado', [DeliveryController::class, 'cambiarEstado'])->name('deliveries.cambiar-estado')->middleware('role:repartidor');
     Route::resource('deliveries', DeliveryController::class)->middleware('role:administrador');
+    
     Route::resource('ventas', VentaController::class)->middleware('role:administrador');
     Route::post('/ventas/{venta}/subir-comprobante', [VentaController::class, 'subirComprobante'])->name('ventas.subir-comprobante')->middleware('role:cliente');
     Route::post('/ventas/{venta}/verificar', [VentaController::class, 'verificarPago'])->name('ventas.verificar')->middleware('role:administrador');
+
+    // Asignar repartidor (administrador)
+    Route::post('/pedidos/{pedido}/asignar-repartidor', [PedidoController::class, 'asignarRepartidor'])->name('pedidos.asignar-repartidor')->middleware('role:administrador');
+    // Repartidor se asigna a sí mismo
+    Route::post('/pedidos/{pedido}/asignarme', [PedidoController::class, 'asignarme'])->name('pedidos.asignarme')->middleware('role:repartidor');
 
     // Reportes
     Route::get('/ventas-diarias', [ReporteController::class, 'ventasDiarias'])->name('reportes.ventas_diarias');

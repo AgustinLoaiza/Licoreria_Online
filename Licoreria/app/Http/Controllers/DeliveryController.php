@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Delivery;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DeliveryController extends Controller
 {
@@ -77,6 +78,7 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, Delivery $delivery)
     {
+
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email,' . $delivery->usuario_id,
@@ -107,6 +109,24 @@ class DeliveryController extends Controller
     {
         $delivery->delete();
         return redirect()->route('deliveries.index')->with('success', 'Repartidor eliminado exitosamente.');
+    }
+
+    // TODO Cambio de estado por el propio repartidor
+    public function cambiarEstado(Request $request, Delivery $delivery)
+    {
+        $user = Auth::user();
+        if ($user->rol !== 'repartidor' || $delivery->usuario_id !== $user->id) {
+            abort(403, 'No tienes permiso para cambiar el estado de este repartidor');
+        }
+
+        $request->validate([
+            'estado' => 'required|in:disponible,ocupado,inactivo',
+        ]);
+
+        $delivery->estado = $request->input('estado');
+        $delivery->save();
+
+        return back()->with('success', 'Estado del repartidor actualizado exitosamente.');
     }
 
     // ? : API para obtener repartidores disponibles

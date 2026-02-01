@@ -182,6 +182,44 @@ class PedidoController extends Controller
         return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado exitosamente.');
     }
 
+    // TODO Asignar repartidor (si es administrador)
+    public function asignarRepartidor(Request $request, Pedido $pedido)
+    {
+        $request->validate([
+            'delivery_id' => 'required|exists:deliveries,id',
+        ]);
+        $pedido->delivery_id = $request->delivery_id;
+        $pedido->estado = 'enviado';
+        $pedido->save();
+
+        Delivery::find($request->delivery_id)->update(['estado' => 'ocupado']);
+
+        return back()->with('success', 'Repartidor asignado exitosamente.');
+    }
+
+    // TODO Repartidor se asigna a sí mismo
+    public function asignarme(Pedido $pedido)
+    {
+        $user = Auth::user();
+        if ($user->rol !== 'repartidor') {
+            return back()->withErrors(['error' => 'Solo los repartidores pueden asignarse pedidos.']);
+        }
+
+        if (!$pedido->delivery_id) {
+            $delivery = Delivery::where('usuario_id', $user->id)->first();
+            if (!$delivery) {
+                return back()->withErrors(['error' => 'No se encontró el perfil de repartidor.']);
+            }
+            $pedido->delivery_id = $delivery->id;
+            $pedido->estado = 'enviado';
+            $pedido->save();
+
+            $delivery->update(['estado' => 'ocupado']);
+            return back()->with('success', 'Te has asignado el pedido exitosamente.');
+        }
+        return back()->withErrors(['error' => 'El pedido ya tiene un repartidor asignado.']);
+    }
+
     // ? : API para cambiar el estado del pedido
     public function cambiarEstado(Request $request, Pedido $pedido)
     {

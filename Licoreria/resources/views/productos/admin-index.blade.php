@@ -95,9 +95,10 @@
                 <select id="filterTipo" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Todos los tipos</option>
                     <option value="bebida">Bebidas</option>
-                    <option value="comida">Comidas</option>
-                    <option value="combo">Combos</option>
-                    <option value="accesorio">Accesorios</option>
+                    <option value="papas">Papas</option>
+                    <option value="hielos">Hielos</option>
+                    <option value="cigarros">Cigarros</option>
+                    <option value="otros">Otros</option>
                 </select>
             </div>
 
@@ -108,7 +109,6 @@
                     <option value="activo">Activos</option>
                     <option value="inactivo">Inactivos</option>
                     <option value="bajo_stock">Stock Bajo</option>
-                    <option value="sin_stock">Sin Stock</option>
                 </select>
             </div>
 

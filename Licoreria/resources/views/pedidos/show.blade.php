@@ -33,17 +33,13 @@
                 @php
                     $statusColors = [
                         'pendiente' => 'bg-yellow-100 text-yellow-800 border-yellow-300',
-                        'confirmado' => 'bg-blue-100 text-blue-800 border-blue-300',
-                        'en_preparacion' => 'bg-purple-100 text-purple-800 border-purple-300',
-                        'en_camino' => 'bg-indigo-100 text-indigo-800 border-indigo-300',
+                        'enviado' => 'bg-blue-100 text-blue-800 border-blue-300',
                         'entregado' => 'bg-green-100 text-green-800 border-green-300',
                         'cancelado' => 'bg-red-100 text-red-800 border-red-300'
                     ];
                     $statusIcons = [
                         'pendiente' => 'fa-clock',
-                        'confirmado' => 'fa-check',
-                        'en_preparacion' => 'fa-utensils',
-                        'en_camino' => 'fa-motorcycle',
+                        'enviado' => 'fa-check',
                         'entregado' => 'fa-box',
                         'cancelado' => 'fa-times'
                     ];
@@ -281,6 +277,7 @@
                             </a>
                         </div>
                         @endif
+
                     </div>
                 </div>
             </div>
@@ -291,7 +288,27 @@
                     <h3 class="text-lg font-semibold text-gray-800">Información de Entrega</h3>
                 </div>
                 <div class="p-6">
+                    {{-- Solo si no hay repartidor asignado --}}
+                        @if(Auth::user()->rol === 'administrador' && !$pedido->delivery_id)
+                            <form action="{{ route('pedidos.asignar-repartidor', $pedido) }}" method="POST" class="mt-4 space-y-2">
+                                @csrf
+                                <label for="delivery_id" class="block text-sm font-medium text-gray-700 mb-2">Asignar repartidor disponible:</label>
+                                <select name="delivery_id" id="delivery_id" class="w-full border rounded-lg px-4 py-2 mb-2" required>
+                                    <option value="">Selecciona un repartidor</option>
+                                    @foreach(\App\Models\Delivery::where('estado', 'disponible')->with('usuario')->get() as $delivery)
+                                        <option value="{{ $delivery->id }}">
+                                            {{ $delivery->usuario->nombre }} ({{ $delivery->usuario->telefono }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                    Asignar repartidor
+                                </button>
+                            </form>
+                        @endif
+
                     @if($pedido->delivery)
+
                     <div class="mb-4">
                         <div class="flex items-center mb-3">
                             <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
@@ -371,6 +388,7 @@
                         @endif
                     </div>
                     @endif
+
                 </div>
             </div>
 
