@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function() {
 
     Route::put('/deliveries/{delivery}/cambiar-estado', [DeliveryController::class, 'cambiarEstado'])->name('deliveries.cambiar-estado')->middleware('role:repartidor');
     Route::resource('deliveries', DeliveryController::class)->middleware('role:administrador');
-    
+
     Route::resource('ventas', VentaController::class)->middleware('role:administrador');
     Route::post('/ventas/{venta}/subir-comprobante', [VentaController::class, 'subirComprobante'])->name('ventas.subir-comprobante')->middleware('role:cliente');
     Route::post('/ventas/{venta}/verificar', [VentaController::class, 'verificarPago'])->name('ventas.verificar')->middleware('role:administrador');
@@ -88,9 +88,9 @@ Route::middleware('auth')->group(function() {
     Route::post('/pedidos/{pedido}/asignarme', [PedidoController::class, 'asignarme'])->name('pedidos.asignarme')->middleware('role:repartidor');
 
     // Reportes
-    Route::get('/ventas-diarias', [ReporteController::class, 'ventasDiarias'])->name('reportes.ventas_diarias');
-    Route::get('/inventario', [ReporteController::class, 'inventario'])->name('reportes.inventario');
-    Route::get('/estadisticas', [ReporteController::class, 'estadisticas'])->name('reportes.estadisticas');
+    //Route::get('/ventas-diarias', [ReporteController::class, 'ventasDiarias'])->name('reportes.ventas_diarias');
+    //Route::get('/inventario', [ReporteController::class, 'inventario'])->name('reportes.inventario');
+    //Route::get('/estadisticas', [ReporteController::class, 'estadisticas'])->name('reportes.estadisticas');
 
     Route::get('/', function() {
         if (!Auth::check()) {

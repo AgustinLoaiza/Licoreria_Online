@@ -113,22 +113,7 @@
                     @endif
                 </a>
 
-                <div class="text-gray-400 text-xs uppercase tracking-wider sidebar-text mt-6 mb-2">Reportes</div>
-
-                <a href="{{ route('reportes.ventas_diarias') }}" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800">
-                    <i class="fas fa-file-invoice-dollar w-6"></i>
-                    <span class="sidebar-text">Ventas Diarias</span>
-                </a>
-
-                <a href="{{ route('reportes.inventario') }}" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800">
-                    <i class="fas fa-boxes w-6"></i>
-                    <span class="sidebar-text">Inventario</span>
-                </a>
-
-                <a href="{{ route('reportes.estadisticas') }}" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-800">
-                    <i class="fas fa-chart-pie w-6"></i>
-                    <span class="sidebar-text">Estadísticas</span>
-                </a>
+                
             </nav>
 
             <!-- Usuario -->

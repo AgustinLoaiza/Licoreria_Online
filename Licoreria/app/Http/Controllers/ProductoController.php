@@ -12,16 +12,29 @@ class ProductoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $query = Producto::query();
+
+        // Filtro por busqeuda
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('nombre', 'ILIKE', "%$search%");
+        }
+
+        // Filtro por tipo
+        if ($request->filled('tipo')) {
+            $query->where('tipo', $request->tipo);
+        }
+
 
         if (in_array($user->rol, ['administrador', 'repartidor'])) {
-            $productos = Producto::paginate(10);
+            $productos = $query->orderBy('created_at', 'desc')->paginate(10);
             return view('productos.admin-index', compact('productos'));
         }
 
-        $productos = Producto::where('activo', true)
+        $productos = $query->where('activo', true)
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 

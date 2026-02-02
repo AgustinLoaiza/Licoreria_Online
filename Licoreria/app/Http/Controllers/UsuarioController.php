@@ -12,9 +12,25 @@ class UsuarioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $usuarios = Usuario::paginate(10);
+        $query = Usuario::query();
+
+        // Filtro de busqueda por nombre o email
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('nombre', 'ILIKE', "%$search%")
+                    ->orWhere('email', 'ILIKE', "%$search%");
+            });
+        }
+
+        // Filtro por rol
+        if ($request->filled('rol')) {
+            $query->where('rol', $request->rol);
+        }
+
+        $usuarios = $query->orderBy('created_at', 'desc')->paginate(10);
         return view('usuarios.index', compact('usuarios'));
     }
 

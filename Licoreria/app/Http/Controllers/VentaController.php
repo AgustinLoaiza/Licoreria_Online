@@ -35,7 +35,7 @@ class VentaController extends Controller
         }
         if ($request->filled('search')) {
             $query->whereHas('pedido.usuario', function($q) use ($request) {
-                $q->where('nombre', 'like', '%' . $request->search . '%');
+                $q->where('nombre', 'ILIKE', '%' . $request->search . '%');
             });
         }
 

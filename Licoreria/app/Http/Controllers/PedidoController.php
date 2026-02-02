@@ -16,17 +16,39 @@ class PedidoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $query = Pedido::with(['usuario', 'delivery']);
 
         if ($user->rol === 'administrador') {
             $pedidos = Pedido::with(['usuario', 'delivery'])->paginate(10);
         } elseif ($user->rol === 'repartidor') {
-            $pedidos = Pedido::where('delivery_id', $user->id)->paginate(10);
+            $query->where('delivery_id', $user->id);
         } else {
-            $pedidos = Pedido::where('usuario_id', $user->id)->with(['usuario', 'delivery'])->orderBy('created_at', 'desc')->paginate(10);
+            $query->where('usuario_id', $user->id);
         }
+
+        // Filtro por estado
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        // Filtro por fecha
+        if ($request->filled('fecha')) {
+            $query->whereDate('created_at', $request->fecha);
+        }
+
+        // Filtro por busqueda (solo administrador)
+        if ($user->rol === 'administrador' && $request->filled('search')) {
+            $search = $request->input('search');
+            $query->whereHas('usuario', function($q) use ($search) {
+                $q->where('nombre', 'ILIKE', "%$search%")
+                  ->orWhere('email', 'ILIKE', "%$search%");
+            });
+        }
+
+        $pedidos = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return view('pedidos.index', compact('pedidos'));
     }
@@ -229,6 +251,6 @@ class PedidoController extends Controller
 
         $pedido->update(['estado' => $request->estado]);
 
-        return response()->json(['message' => 'Estado del pedido actualizado exitosamente.']);
+        return response()->json(['success' => true, 'message' => 'Estado del pedido actualizado exitosamente.']);
     }
 }
