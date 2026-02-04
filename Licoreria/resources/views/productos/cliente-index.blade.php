@@ -10,7 +10,7 @@
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div>
                 <h1 class="text-3xl font-bold mb-2">¡Encuentra tus bebidas favoritas!</h1>
-                <p class="text-red-100 mb-4">Gran selección de licores, cervezas y más. Delivery en 30 minutos.</p>
+                <p class="text-red-100 mb-4">Gran selección de Bebidas y acompañamientos. Delivery en 30 minutos.</p>
                 <div class="flex items-center space-x-4">
                     <div class="flex items-center">
                         <i class="fas fa-clock text-xl mr-2"></i>
@@ -22,8 +22,8 @@
                     <div class="flex items-center">
                         <i class="fas fa-truck text-xl mr-2"></i>
                         <div>
-                            <p class="text-sm">Delivery gratis</p>
-                            <p class="font-bold">S/ 0.00</p>
+                            <p class="text-sm">Delivery seguro</p>
+                            <p class="font-bold">En toda la ciudad</p>
                         </div>
                     </div>
                 </div>
@@ -55,18 +55,11 @@
                         class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                     <option value="">Todas las categorías</option>
                     <option value="bebida">Bebidas alcohólicas</option>
-                    <option value="comida">Acompañamientos</option>
-                    <option value="combo">Combos especiales</option>
-                    <option value="accesorio">Accesorios</option>
-                </select>
-
-                <!-- Ordenar -->
-                <select id="filterOrden"
-                        class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
-                    <option value="nuevos">Más nuevos</option>
-                    <option value="precio_asc">Precio: Menor a mayor</option>
-                    <option value="precio_desc">Precio: Mayor a menor</option>
-                    <option value="nombre">Nombre A-Z</option>
+                    <option value="soda">Refrescos</option>
+                    <option value="papas">Snacks</option>
+                    <option value="hielos">Hielos</option>
+                    <option value="cigarros">Cigarros</option>
+                    <option value="otros">Otros</option>
                 </select>
 
                 <button onclick="aplicarFiltros()"
@@ -82,21 +75,25 @@
                     class="flex-shrink-0 bg-blue-100 text-blue-800 px-4 py-2 rounded-lg hover:bg-blue-200 flex items-center">
                 <i class="fas fa-wine-glass-alt mr-2"></i> Bebidas
             </button>
-            <button onclick="filtrarPorTipo('comida')"
+            <button onclick="filtrarPorTipo('soda')"
                     class="flex-shrink-0 bg-green-100 text-green-800 px-4 py-2 rounded-lg hover:bg-green-200 flex items-center">
                 <i class="fas fa-utensils mr-2"></i> Acompañamientos
             </button>
-            <button onclick="filtrarPorTipo('combo')"
+            <button onclick="filtrarPorTipo('papas')"
                     class="flex-shrink-0 bg-purple-100 text-purple-800 px-4 py-2 rounded-lg hover:bg-purple-200 flex items-center">
-                <i class="fas fa-gift mr-2"></i> Combos
+                <i class="fas fa-gift mr-2"></i> Snacks
             </button>
-            <button onclick="filtrarPorTipo('accesorio')"
+            <button onclick="filtrarPorTipo('hielos')"
+                    class="flex-shrink-0 bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg hover:bg-indigo-200 flex items-center">
+                <i class="fas fa-snowflake mr-2"></i> Hielos
+            </button>
+            <button onclick="filtrarPorTipo('cigarros')"
+                    class="flex-shrink-0 bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 flex items-center">
+                <i class="fas fa-smoking mr-2"></i> Cigarros
+            </button>
+            <button onclick="filtrarPorTipo('otros')"
                     class="flex-shrink-0 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg hover:bg-yellow-200 flex items-center">
-                <i class="fas fa-glass-whiskey mr-2"></i> Accesorios
-            </button>
-            <button onclick="mostrarOfertas()"
-                    class="flex-shrink-0 bg-red-100 text-red-800 px-4 py-2 rounded-lg hover:bg-red-200 flex items-center">
-                <i class="fas fa-tag mr-2"></i> Ofertas
+                <i class="fas fa-glass-whiskey mr-2"></i> Otros
             </button>
         </div>
     </div>
@@ -291,14 +288,14 @@
     function aplicarFiltros() {
         const search = document.getElementById('searchInput').value;
         const categoria = document.getElementById('filterCategoria').value;
-        const orden = document.getElementById('filterOrden').value;
+        //const orden = document.getElementById('filterOrden').value;
 
         let url = '{{ route("productos.index") }}?';
         const params = [];
 
         if (search) params.push(`search=${encodeURIComponent(search)}`);
-        if (categoria) params.push(`categoria=${categoria}`);
-        if (orden) params.push(`orden=${orden}`);
+        if (categoria) params.push(`tipo=${categoria}`);
+        //if (orden) params.push(`orden=${orden}`);
 
         window.location.href = url + params.join('&');
     }
@@ -316,7 +313,7 @@
     function limpiarFiltros() {
         document.getElementById('searchInput').value = '';
         document.getElementById('filterCategoria').value = '';
-        document.getElementById('filterOrden').value = 'nuevos';
+        //document.getElementById('filterOrden').value = 'nuevos';
         aplicarFiltros();
     }
 

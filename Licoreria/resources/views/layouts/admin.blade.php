@@ -113,7 +113,7 @@
                     @endif
                 </a>
 
-                
+
             </nav>
 
             <!-- Usuario -->
@@ -149,14 +149,6 @@
                     </div>
 
                     <div class="flex items-center space-x-4">
-                        <!-- Notificaciones -->
-                        <div class="relative">
-                            <button class="p-2 rounded-full hover:bg-gray-100">
-                                <i class="fas fa-bell text-gray-600"></i>
-                                <span class="notification-badge bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-                            </button>
-                        </div>
-
                         <!-- Fecha y Hora -->
                         <div class="text-sm text-gray-600">
                             <i class="far fa-clock mr-2"></i>

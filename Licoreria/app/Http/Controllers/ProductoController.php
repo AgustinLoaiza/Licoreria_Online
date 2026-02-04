@@ -42,11 +42,22 @@ class ProductoController extends Controller
     }
 
     // Catalogo para los clientes
-    public function catalogo()
+    public function catalogo(Request $request)
     {
-        $productos = Producto::where('activo', true)
-            ->orderBy('created_at', 'desc')
-            ->paginate(12);
+        $query = Producto::where('activo', true);
+
+        // Filtro por busqeuda
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('nombre', 'ILIKE', "%$search%");
+        }
+
+        // Filtro por tipo/categoria
+        if ($request->filled('tipo')) {
+            $query->where('tipo', $request->tipo);
+        }
+
+        $productos = $query->orderBy('created_at', 'desc')->paginate(12);
 
         return view('productos.cliente-index', compact('productos'));
     }

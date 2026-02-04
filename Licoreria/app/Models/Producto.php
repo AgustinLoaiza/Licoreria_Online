@@ -19,7 +19,7 @@ class Producto extends Model
         'precio',
         'cantidad',
         'descripcion',
-        'disponible',
+        'activo',
     ];
 
     public function detallePedidos()
