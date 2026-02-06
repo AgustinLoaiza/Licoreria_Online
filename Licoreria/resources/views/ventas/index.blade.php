@@ -408,7 +408,11 @@
         data: {
             labels: ['QR', 'Efectivo', 'Tarjeta'],
             datasets: [{
-                data: [65, 25, 10],
+                data: [
+                    {{ $ventasPorMetodo['qr'] ?? 0 }},
+                    {{ $ventasPorMetodo['efectivo'] ?? 0 }},
+                    {{ $ventasPorMetodo['tarjeta'] ?? 0 }}
+                ],
                 backgroundColor: [
                     '#10b981', // Verde para QR
                     '#f59e0b', // Amarillo para efectivo

@@ -21,6 +21,20 @@ class VentaController extends Controller
         $ventas_verificadas = Venta::where('estado', 'verificado')->count();
         $total_verificadas = Pedido::where('estado', 'verificado')->sum('monto_total');
 
+        // Ventas por metodo de pago de los ultimos 30 dias
+        $metodos = ['qr', 'efectivo', 'tarjeta'];
+        $ventasPorMetodo = [];
+
+        foreach ($metodos as $metodo) {
+            $ventasPorMetodo[$metodo] = Venta::where('estado', 'pagado')
+                ->where('metodo_pago', $metodo)
+                ->whereDate('created_at', '>=', now()->subDays(30))
+                ->get()
+                ->sum(function($venta) {
+                    return $venta->pedido ? $venta->pedido->monto_total : 0;
+                });
+        }
+
         // Filtros y paginación
         $query = Venta::with('pedido.usuario');
 
@@ -48,7 +62,8 @@ class VentaController extends Controller
             'pagos_pendientes',
             'ventas_verificadas',
             'total_verificadas',
-            'ventas'
+            'ventas',
+            'ventasPorMetodo'
         ));
     }
 

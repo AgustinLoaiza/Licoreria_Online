@@ -8,6 +8,7 @@ use App\Models\Pedido;
 use App\Models\Usuario;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -25,7 +26,29 @@ class DashboardController extends Controller
         $pedidos_recientes = Pedido::with('usuario')->orderBy('created_at', 'desc')->take(5)->get();
         $pagos_pendientes = Venta::where('estado', 'pendiente')->orderBy('created_at', 'desc')->take(5)->get();
 
-        return view('dashboard.administrador', compact('stats', 'pedidos_recientes', 'pagos_pendientes'));
+        // Venta de los ultimos 7 meses
+
+
+        $ventasMensuales = DB::table('ventas')
+            ->join('pedidos', 'ventas.pedido_id', '=', 'pedidos.id')
+            ->selectRaw("to_char(ventas.created_at, 'Mon YYYY') as mes, SUM(pedidos.monto_total) as total")
+            ->where('ventas.estado', 'pagado')
+            ->where('ventas.created_at', '>=', now()->subMonths(6)->startOfMonth())
+            ->groupBy(DB::raw("to_char(ventas.created_at, 'Mon YYYY')"), DB::raw("date_trunc('month', ventas.created_at)"))
+            ->orderBy(DB::raw("date_trunc('month', ventas.created_at)"))
+            ->pluck('total', 'mes')
+            ->toArray();
+
+        // Asegurar que siempre haya 7 meses aunque 0
+        $labels = [];
+        $data = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $mes = now()->subMonths($i)->format('M Y');
+            $labels[] = $mes;
+            $data[] = isset($ventasMensuales[$mes]) ? (float)$ventasMensuales[$mes] : 0;
+        }
+
+        return view('dashboard.administrador', compact('stats', 'pedidos_recientes', 'pagos_pendientes', 'labels', 'data'));
     }
 
     public function cliente()

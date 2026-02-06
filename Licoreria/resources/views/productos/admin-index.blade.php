@@ -72,10 +72,6 @@
                     class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
                 <i class="fas fa-file-export mr-2"></i> Exportar
             </button>
-            <a href="{{ route('productos.index') }}?view=catalogo"
-               class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center">
-                <i class="fas fa-eye mr-2"></i> Ver como Cliente
-            </a>
         </div>
     </div>
 
@@ -262,12 +258,6 @@
                                         class="text-red-600 hover:text-red-900" title="Eliminar">
                                     <i class="fas fa-trash"></i>
                                 </button>
-
-                                <!-- Duplicar -->
-                                <button onclick="duplicarProducto({{ $producto->id }})"
-                                        class="text-purple-600 hover:text-purple-900" title="Duplicar">
-                                    <i class="fas fa-copy"></i>
-                                </button>
                             </div>
                         </td>
                     </tr>
@@ -285,39 +275,6 @@
         <!-- Paginación -->
         <div class="px-6 py-4 border-t">
             {{ $productos->links('components.pagination') }}
-        </div>
-    </div>
-
-    <!-- Resumen de acciones rápidas -->
-    <div class="bg-white rounded-xl shadow p-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Acciones Rápidas</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button onclick="exportarReporteStock()"
-                    class="bg-blue-100 text-blue-700 p-4 rounded-lg hover:bg-blue-200 flex items-center">
-                <i class="fas fa-chart-bar text-2xl mr-3"></i>
-                <div>
-                    <p class="font-semibold">Reporte de Stock</p>
-                    <p class="text-sm">Generar reporte PDF</p>
-                </div>
-            </button>
-
-            <button onclick="reabastecerTodos()"
-                    class="bg-green-100 text-green-700 p-4 rounded-lg hover:bg-green-200 flex items-center">
-                <i class="fas fa-truck-loading text-2xl mr-3"></i>
-                <div>
-                    <p class="font-semibold">Reabastecer</p>
-                    <p class="text-sm">Productos con stock bajo</p>
-                </div>
-            </button>
-
-            <button onclick="verCatalogoCompleto()"
-                    class="bg-purple-100 text-purple-700 p-4 rounded-lg hover:bg-purple-200 flex items-center">
-                <i class="fas fa-store text-2xl mr-3"></i>
-                <div>
-                    <p class="font-semibold">Ver Catálogo</p>
-                    <p class="text-sm">Como lo ven los clientes</p>
-                </div>
-            </button>
         </div>
     </div>
 </div>

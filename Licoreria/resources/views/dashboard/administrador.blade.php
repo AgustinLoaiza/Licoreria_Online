@@ -261,10 +261,10 @@
     const salesChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+            labels: @json($labels),
             datasets: [{
                 label: 'Ventas (S/)',
-                data: [12000, 19000, 15000, 25000, 22000, 30000, 28000],
+                data: @json($data),
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 borderWidth: 2,
