@@ -187,30 +187,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Mapa Simulado -->
-    <div class="bg-white rounded-xl shadow p-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Zona de Entrega</h3>
-        <div class="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
-            <div class="text-center">
-                <i class="fas fa-map-marked-alt text-gray-400 text-4xl mb-3"></i>
-                <p class="text-gray-600">Mapa de entregas</p>
-                <p class="text-sm text-gray-500">(Integración con Google Maps)</p>
-                <button onclick="mostrarZonaEntrega()"
-                        class="mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                    <i class="fas fa-map-marker-alt mr-2"></i>Ver en Mapa
-                </button>
-            </div>
-        </div>
-    </div>
 </div>
-
-@push('scripts')
-<script>
-    function mostrarZonaEntrega() {
-        // Aquí se integraría con Google Maps
-        alert('Mostrando zona de entrega en el mapa');
-    }
-</script>
-@endpush
 @endsection

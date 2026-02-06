@@ -68,10 +68,10 @@
                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
                 <i class="fas fa-plus mr-2"></i> Nuevo Producto
             </a>
-            <button onclick="exportarProductos()"
-                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
-                <i class="fas fa-file-export mr-2"></i> Exportar
-            </button>
+            <a href="{{ route('productos.export.pdf') }}"
+                class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center" target="_blank">
+                <i class="fas fa-file-pdf mr-2"></i> Exportar PDF
+            </a>
         </div>
     </div>
 
@@ -290,10 +290,6 @@
             `¿Estás seguro de eliminar el producto "${nombre}"? Esta acción no se puede deshacer.`,
             `/productos/${id}`
         );
-    }
-
-    function exportarProductos() {
-        window.location.href = '/productos/export?type=excel';
     }
 
     function exportarReporteStock() {

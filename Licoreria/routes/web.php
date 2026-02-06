@@ -92,6 +92,10 @@ Route::middleware('auth')->group(function() {
     //Route::get('/inventario', [ReporteController::class, 'inventario'])->name('reportes.inventario');
     //Route::get('/estadisticas', [ReporteController::class, 'estadisticas'])->name('reportes.estadisticas');
 
+    // Rutas para exportar reportes en PDF
+    Route::get('/productos/export/pdf', [ProductoController::class, 'exportPdf'])->name('productos.export.pdf')->middleware('role:administrador');
+    Route::get('/ventas/export/pdf', [VentaController::class, 'exportPdf'])->name('ventas.export.pdf')->middleware('role:administrador');
+
     Route::get('/', function() {
         if (!Auth::check()) {
             return redirect()->route('login');

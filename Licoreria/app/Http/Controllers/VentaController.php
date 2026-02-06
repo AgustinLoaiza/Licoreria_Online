@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use App\Models\Pedido;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VentaController extends Controller
 {
@@ -168,5 +169,13 @@ class VentaController extends Controller
         ]);
 
         return response()->json(['success' => 'Pago verificado exitosamente.']);
+    }
+
+    // Funcion para exportar ventas en PDF
+    public function exportPdf()
+    {
+        $ventas = Venta::with('pedido.usuario')->get();
+        $pdf = Pdf::loadView('ventas.pdf', compact('ventas'));
+        return $pdf->download('ventas.pdf');
     }
 }

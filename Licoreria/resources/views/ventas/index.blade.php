@@ -114,10 +114,10 @@
                         class="flex-1 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900">
                     <i class="fas fa-filter mr-2"></i> Filtrar
                 </button>
-                <button onclick="exportarVentas()"
-                        class="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-                    <i class="fas fa-file-export mr-2"></i> Exportar
-                </button>
+                <a href="{{ route('ventas.export.pdf') }}"
+                class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center" target="_blank">
+                <i class="fas fa-file-pdf mr-2"></i> Exportar PDF
+            </a>
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
@@ -177,6 +178,14 @@ class ProductoController extends Controller
         $producto->delete();
 
         return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente.');
+    }
+
+    // Funcion para exportar en PDF
+    public function exportPDF()
+    {
+        $productos = Producto::all();
+        $pdf = Pdf::loadView('productos.pdf', compact('productos'));
+        return $pdf->download('productos.pdf');
     }
 
     // ? : API para obtener los productos por tipo si deseo usar AJAX
