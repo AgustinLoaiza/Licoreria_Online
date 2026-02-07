@@ -13,15 +13,12 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Total Ventas</p>
-                    <p class="text-3xl font-bold text-gray-800">S/ {{ number_format($stats['ingresos_mes'], 2) }}</p>
+                    <p class="text-3xl font-bold text-gray-800">S/ {{ number_format($total_ventas, 2) }}</p>
                 </div>
                 <div class="bg-blue-100 p-3 rounded-full">
                     <i class="fas fa-chart-line text-blue-600 text-xl"></i>
                 </div>
             </div>
-            <p class="text-green-600 text-sm mt-2">
-                <i class="fas fa-arrow-up mr-1"></i>12% vs mes anterior
-            </p>
         </div>
 
         <!-- Pedidos Pendientes -->

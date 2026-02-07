@@ -25,10 +25,11 @@ class DashboardController extends Controller
 
         $pedidos_recientes = Pedido::with('usuario')->orderBy('created_at', 'desc')->take(5)->get();
         $pagos_pendientes = Venta::where('estado', 'pendiente')->orderBy('created_at', 'desc')->take(5)->get();
-
+        $total_ventas = Pedido::whereHas('venta', function($q) {
+            $q->where('estado', 'pagado');
+        })->sum('monto_total');
+        
         // Venta de los ultimos 7 meses
-
-
         $ventasMensuales = DB::table('ventas')
             ->join('pedidos', 'ventas.pedido_id', '=', 'pedidos.id')
             ->selectRaw("to_char(ventas.created_at, 'Mon YYYY') as mes, SUM(pedidos.monto_total) as total")
@@ -48,7 +49,7 @@ class DashboardController extends Controller
             $data[] = isset($ventasMensuales[$mes]) ? (float)$ventasMensuales[$mes] : 0;
         }
 
-        return view('dashboard.administrador', compact('stats', 'pedidos_recientes', 'pagos_pendientes', 'labels', 'data'));
+        return view('dashboard.administrador', compact('stats', 'total_ventas', 'pedidos_recientes', 'pagos_pendientes', 'labels', 'data'));
     }
 
     public function cliente()

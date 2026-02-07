@@ -19,9 +19,6 @@
                     <i class="fas fa-chart-line text-blue-600 text-xl"></i>
                 </div>
             </div>
-            <p class="text-green-600 text-sm mt-2">
-                <i class="fas fa-arrow-up mr-1"></i>15% vs mes anterior
-            </p>
         </div>
 
         <!-- Ventas Hoy -->
@@ -43,7 +40,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Pagos Pendientes</p>
-                    <p class="text-3xl font-bold text-gray-800">{{ $pagos_pendientes }}</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ $pagos_pendientes }} (S/ {{ number_format($pagos_pendientes_monto, 2) }})</p>
                 </div>
                 <div class="bg-yellow-100 p-3 rounded-full">
                     <i class="fas fa-clock text-yellow-600 text-xl"></i>
@@ -59,7 +56,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Ventas Verificadas</p>
-                    <p class="text-3xl font-bold text-gray-800">{{ $ventas_verificadas }}</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ $ventas_verificadas }} (S/ {{ number_format($total_verificadas, 2) }})</p>
                 </div>
                 <div class="bg-purple-100 p-3 rounded-full">
                     <i class="fas fa-check-circle text-purple-600 text-xl"></i>

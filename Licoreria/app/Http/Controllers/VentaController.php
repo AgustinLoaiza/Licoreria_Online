@@ -15,12 +15,23 @@ class VentaController extends Controller
     public function index(Request $request)
     {
         // Estadísticas
-        $total_ventas = Pedido::where('estado', 'pagado')->sum('monto_total');
-        $ventas_hoy = Pedido::where('estado', 'pagado')->whereDate('created_at', today())->sum('monto_total');
+        $total_ventas = Pedido::whereHas('venta', function($q) {
+            $q->where('estado', 'pagado');
+        })->sum('monto_total');
+        $ventas_hoy = Pedido::whereHas('venta', function($q) {
+            $q->where('estado', 'pagado')->whereDate('created_at', today());
+        })->sum('monto_total');
         $ventas_count_hoy = Venta::where('estado', 'pagado')->whereDate('created_at', today())->count();
         $pagos_pendientes = Venta::where('estado', 'pendiente')->count();
-        $ventas_verificadas = Venta::where('estado', 'verificado')->count();
-        $total_verificadas = Pedido::where('estado', 'verificado')->sum('monto_total');
+        $pagos_pendientes_monto = Venta::where('estado', 'pendiente')
+            ->get()
+            ->sum(function($venta) {
+                return $venta->pedido ? $venta->pedido->monto_total : 0;
+            });
+        $ventas_verificadas = Venta::where('estado', 'pagado')->count();
+        $total_verificadas = Pedido::whereHas('venta', function($q) {
+            $q->where('estado', 'pagado');
+        })->sum('monto_total');
 
         // Ventas por metodo de pago de los ultimos 30 dias
         $metodos = ['qr', 'efectivo', 'tarjeta'];
@@ -61,6 +72,7 @@ class VentaController extends Controller
             'ventas_hoy',
             'ventas_count_hoy',
             'pagos_pendientes',
+            'pagos_pendientes_monto',
             'ventas_verificadas',
             'total_verificadas',
             'ventas',
