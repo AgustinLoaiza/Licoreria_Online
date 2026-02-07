@@ -213,10 +213,15 @@
                                     </span>
                                 </div>
                                 @if($producto->cantidad < 10)
-                                <button onclick="reabastecerProducto({{ $producto->id }})"
-                                        class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded hover:bg-yellow-200">
-                                    <i class="fas fa-boxes mr-1"></i> Reabastecer
-                                </button>
+                                    <form action="{{ route('productos.reabastecer', $producto) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        <input type="number" name="cantidad" min="1" required
+                                               class="border rounded px-2 py-1 w-20" placeholder="Cantidad">
+                                        <button type="submit"
+                                                class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center">
+                                            <i class="fas fa-plus mr-2"></i> Reabastecer
+                                        </button>
+                                    </form>
                                 @endif
                             </div>
                         </td>
@@ -224,17 +229,17 @@
                         <!-- Columna Estado -->
                         <td class="px-6 py-4">
                             <div class="space-y-1">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                    {{ $producto->activo ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                <span class="px-2 py-1 rounded {{ $producto->activo ? 'bg-green-100 text-green-800' : 'bg-red-100   text-red-800' }}">
                                     {{ $producto->activo ? 'Activo' : 'Inactivo' }}
                                 </span>
-
-                                <div class="flex space-x-1">
-                                    <button onclick="toggleEstado({{ $producto->id }}, {{ $producto->activo ? 0 : 1 }})"
-                                            class="text-xs {{ $producto->activo ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700' }} px-2 py-1 rounded">
-                                        {{ $producto->activo ? 'Desactivar' : 'Activar' }}
-                                    </button>
-                                </div>
+                                <form action="{{ route('productos.cambiar-estado', $producto) }}" method="POST" class="inline-block ml-2">
+                                    @csrf
+                                        <input type="hidden" name="activo" value="{{ $producto->activo ? 0 : 1 }}">
+                                        <button type="submit"
+                                                class="bg-gray-600 text-white px-2 py-1 rounded hover:bg-gray-700 text-xs">
+                                            {{ $producto->activo ? 'Desactivar' : 'Activar' }}
+                                        </button>
+                                </form>
                             </div>
                         </td>
 
@@ -330,26 +335,6 @@
             console.error('Error:', error);
             alert('Error al cambiar el estado');
         });
-    }
-
-    function reabastecerProducto(productoId) {
-        const cantidad = prompt('Ingrese la cantidad a agregar:', '10');
-        if (cantidad && !isNaN(cantidad) && cantidad > 0) {
-            fetch(`/productos/${productoId}/reabastecer`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({ cantidad: parseInt(cantidad) })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                }
-            });
-        }
     }
 
     function duplicarProducto(productoId) {

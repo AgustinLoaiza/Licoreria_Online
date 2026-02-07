@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function() {
         Route::get('/productos', [ProductoController::class, 'index'])->name('productos.admin.index');
         Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
         Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
+        Route::post('/productos/{producto}/reabastecer', [ProductoController::class, 'reabastecer'])->name('productos.reabastecer')->middleware('role:administrador');
+        Route::post('/productos/{producto}/cambiar-estado', [ProductoController::class, 'cambiarEstado'])->name('productos.cambiar-estado')->middleware('role:administrador,repartidor');
         Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
         Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])->name('productos.catalogo.show');
         Route::get('/productos/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.edit');

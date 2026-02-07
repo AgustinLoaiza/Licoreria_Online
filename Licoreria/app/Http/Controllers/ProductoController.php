@@ -180,6 +180,32 @@ class ProductoController extends Controller
         return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente.');
     }
 
+    // Funcion para reabastecer el producto
+    public function reabastecer(Request $request, Producto $producto)
+    {
+        $request->validate([
+            'cantidad' => 'required|integer|min:1'
+        ]);
+
+        $producto->cantidad += $request->cantidad;
+        $producto->save();
+
+        return back()->with('success', 'Producto reabastecido correctamente.');
+    }
+
+    //Funcion para cambiar de estado
+    public function cambiarEstado(Request $request, Producto $producto)
+    {
+        $request->validate([
+            'activo' => 'required|boolean',
+        ]);
+
+        $producto->activo = $request->activo;
+        $producto->save();
+
+        return back()->with('success', 'Estado del producto actualizado correctamente.');
+    }
+
     // Funcion para exportar en PDF
     public function exportPDF()
     {
