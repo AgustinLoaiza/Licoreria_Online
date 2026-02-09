@@ -43,9 +43,11 @@
                                     required>
                                 <option value="">Selecciona un tipo</option>
                                 <option value="bebida" {{ old('tipo') == 'bebida' ? 'selected' : '' }}>Bebida</option>
-                                <option value="comida" {{ old('tipo') == 'comida' ? 'selected' : '' }}>Comida</option>
-                                <option value="combo" {{ old('tipo') == 'combo' ? 'selected' : '' }}>Combo</option>
-                                <option value="accesorio" {{ old('tipo') == 'accesorio' ? 'selected' : '' }}>Accesorio</option>
+                                <option value="soda" {{ old('tipo') == 'soda' ? 'selected' : '' }}>Soda</option>
+                                <option value="papas" {{ old('tipo') == 'papas' ? 'selected' : '' }}>Papas</option>
+                                <option value="hielos" {{ old('tipo') == 'hielos' ? 'selected' : '' }}>Hielos</option>
+                                <option value="cigarros" {{ old('tipo') == 'cigarros' ? 'selected' : '' }}>Cigarros</option>
+                                <option value="otros" {{ old('tipo') == 'otros' ? 'selected' : '' }}>Otros</option>
                             </select>
                             @error('tipo')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

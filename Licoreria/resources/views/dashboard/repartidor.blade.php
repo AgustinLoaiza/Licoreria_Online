@@ -177,11 +177,11 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-gray-50 p-3 rounded-lg">
                         <p class="text-sm text-gray-600">Pedidos Entregados</p>
-                        <p class="text-2xl font-bold text-gray-800">3</p>
+                        <p class="text-2xl font-bold text-gray-800">{{ $entregadosHoy }}</p>
                     </div>
                     <div class="bg-gray-50 p-3 rounded-lg">
-                        <p class="text-sm text-gray-600">Ganancias Estimadas</p>
-                        <p class="text-2xl font-bold text-gray-800">S/ 45.00</p>
+                        <p class="text-sm text-gray-600">Ganancias</p>
+                        <p class="text-2xl font-bold text-gray-800">{{ number_format($gananciasHoy, 2) }}</p>
                     </div>
                 </div>
             </div>

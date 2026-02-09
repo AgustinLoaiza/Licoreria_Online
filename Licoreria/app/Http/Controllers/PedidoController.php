@@ -148,10 +148,10 @@ class PedidoController extends Controller
      */
     public function edit(Pedido $pedido)
     {
-        $productos = Producto::where('activo', true)->get();
-        $repartidores = Delivery::with('usuario')->where('estado', 'disponible')->get();
+        //$productos = Producto::where('activo', true)->get();
+        //$repartidores = Delivery::with('usuario')->where('estado', 'disponible')->get();
 
-        return view('pedidos.edit', compact('pedido', 'productos', 'repartidores'));
+        //return view('pedidos.edit', compact('pedido', 'productos', 'repartidores'));
     }
 
     /**

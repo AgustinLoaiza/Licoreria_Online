@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $total_ventas = Pedido::whereHas('venta', function($q) {
             $q->where('estado', 'pagado');
         })->sum('monto_total');
-        
+
         // Venta de los ultimos 7 meses
         $ventasMensuales = DB::table('ventas')
             ->join('pedidos', 'ventas.pedido_id', '=', 'pedidos.id')
@@ -74,8 +74,20 @@ class DashboardController extends Controller
 
         $pedidos_asignados = Pedido::where('delivery_id', $delivery->id)->orderBy('created_at', 'desc')->paginate(5);
         $historial = Pedido::where('delivery_id', $delivery->id)->whereIn('estado', ['entregado', 'cancelado'])->orderBy('updated_at', 'desc')->paginate(5);
+        // Estadísticas rápidas del día
+        $entregadosHoy = Pedido::where('delivery_id', $delivery->id)
+            ->where('estado', 'entregado')
+            ->whereDate('updated_at', now()->toDateString())
+            ->count();
+
+        // Si tienes un campo de comisión, cámbialo aquí
+        $gananciasHoy = Pedido::where('delivery_id', $delivery->id)
+            ->where('estado', 'entregado')
+            ->whereDate('updated_at', now()->toDateString())
+            ->sum('monto_total');
+            
         $pedidos_activos = $pedidos_asignados->count();
 
-        return view('dashboard.repartidor', compact('pedidos_asignados', 'historial', 'delivery', 'pedidos_activos'));
+        return view('dashboard.repartidor', compact('pedidos_asignados', 'historial', 'delivery', 'pedidos_activos', 'entregadosHoy', 'gananciasHoy'));
     }
 }

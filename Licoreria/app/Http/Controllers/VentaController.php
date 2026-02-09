@@ -85,8 +85,8 @@ class VentaController extends Controller
      */
     public function create()
     {
-        $pedidos = Pedido::whereDoesntHave('venta')->where('estado', '!=', 'cancelado')->with('usuario')->get();
-        return view('ventas.create', compact('pedidos'));
+        //$pedidos = Pedido::whereDoesntHave('venta')->where('estado', '!=', 'cancelado')->with('usuario')->get();
+        //return view('ventas.create', compact('pedidos'));
     }
 
     /**
@@ -122,7 +122,7 @@ class VentaController extends Controller
      */
     public function edit(Venta $venta)
     {
-        return view('ventas.edit', compact('venta'));
+        //return view('ventas.edit', compact('venta'));
     }
 
     /**

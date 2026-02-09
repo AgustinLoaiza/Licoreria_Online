@@ -102,27 +102,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Recordarme y Olvidé contraseña -->
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input
-                            id="remember"
-                            name="remember"
-                            type="checkbox"
-                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                            {{ old('remember') ? 'checked' : '' }}>
-                        <label for="remember" class="ml-2 block text-sm text-gray-700">
-                            Recordar sesión
-                        </label>
-                    </div>
-
-                    <div class="text-sm">
-                        <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
-                            ¿Olvidaste tu contraseña?
-                        </a>
-                    </div>
-                </div>
             </div>
 
             <!-- Botón de Login -->
@@ -145,58 +124,26 @@
                     </a>
                 </p>
             </div>
-
-            <!-- Separador -->
-            <div class="relative my-6">
-                <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-gray-300"></div>
-                </div>
-                <div class="relative flex justify-center text-sm">
-                    <span class="px-2 bg-white text-gray-500">O continúa como</span>
-                </div>
-            </div>
         </form>
     </div>
 </div>
 
-<!-- Script para credenciales de demo -->
+<!-- Script para mostrar/ocultar contraseña -->
 <script>
-    function setDemoCredentials(email, password) {
-        document.getElementById('email').value = email;
-        document.getElementById('password').value = password;
-
-        // Mostrar notificación
-        showNotification('Credenciales de prueba cargadas', 'info');
-    }
-
-    function showNotification(message, type = 'info') {
-        // Crear elemento de notificación
-        const notification = document.createElement('div');
-        notification.className = `fixed top-4 right-4 px-4 py-3 rounded-lg shadow-lg z-50 ${
-            type === 'info' ? 'bg-blue-100 text-blue-800 border-blue-300' :
-            type === 'success' ? 'bg-green-100 text-green-800 border-green-300' :
-            'bg-red-100 text-red-800 border-red-300'
-        } border-l-4`;
-        notification.innerHTML = `
-            <div class="flex items-center">
-                <i class="fas fa-${type === 'info' ? 'info-circle' : type === 'success' ? 'check-circle' : 'exclamation-circle'} mr-2"></i>
-                <span>${message}</span>
-            </div>
-        `;
-
-        // Agregar al documento
-        document.body.appendChild(notification);
-
-        // Remover después de 3 segundos
-        setTimeout(() => {
-            notification.remove();
-        }, 3000);
-    }
-
-    // Mostrar mensaje de bienvenida si viene del registro
-    @if(session('registered'))
-        showNotification('¡Cuenta creada exitosamente! Ya puedes iniciar sesión.', 'success');
-    @endif
+    document.querySelectorAll('.toggle-password').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const input = document.getElementById('password');
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.querySelector('i').classList.remove('fa-eye');
+                btn.querySelector('i').classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                btn.querySelector('i').classList.remove('fa-eye-slash');
+                btn.querySelector('i').classList.add('fa-eye');
+            }
+        });
+    });
 </script>
 
 <!-- Estilos adicionales -->

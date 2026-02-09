@@ -11,10 +11,6 @@ use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 // Rutas publicas
 Route::middleware('guest')->group(function() {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -44,9 +40,10 @@ Route::middleware('auth')->group(function() {
 
     // CRUD de productos
     Route::resource('productos', ProductoController::class)->middleware('role:administrador,cliente,repartidor');
-    //Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index')->middleware('role:cliente'); //! Error de duplicado
+
     // PRODUCTOS PARA CLIENTES (catálogo)
     Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+
     // PRODUCTOS PARA ADMIN/REPARTIDOR (gestión)
     Route::middleware('role:administrador,repartidor')->prefix('administrador')->group(function () {
         Route::get('/productos', [ProductoController::class, 'index'])->name('productos.admin.index');
@@ -65,14 +62,6 @@ Route::middleware('auth')->group(function() {
         ->name('productos.catalogo.show')
         ->middleware('role:cliente');
 
-    // ? PRUEBA DE RUTAS DE PRODUCTOS SIMPLIFICADAS
-    // CRUD de productos SOLO para admin y repartidor
-    // Route::resource('productos', ProductoController::class)->middleware('role:administrador,cliente,repartidor');
-
-    // // Catálogo para clientes
-    // Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
-    // Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])->name('productos.catalogo.show');
-
     // CRUD de pedidos
     Route::resource('pedidos', PedidoController::class);
     Route::post('/pedidos/{pedido}/cambiar-estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar-estado');
@@ -86,13 +75,9 @@ Route::middleware('auth')->group(function() {
 
     // Asignar repartidor (administrador)
     Route::post('/pedidos/{pedido}/asignar-repartidor', [PedidoController::class, 'asignarRepartidor'])->name('pedidos.asignar-repartidor')->middleware('role:administrador');
+    
     // Repartidor se asigna a sí mismo
     Route::post('/pedidos/{pedido}/asignarme', [PedidoController::class, 'asignarme'])->name('pedidos.asignarme')->middleware('role:repartidor');
-
-    // Reportes
-    //Route::get('/ventas-diarias', [ReporteController::class, 'ventasDiarias'])->name('reportes.ventas_diarias');
-    //Route::get('/inventario', [ReporteController::class, 'inventario'])->name('reportes.inventario');
-    //Route::get('/estadisticas', [ReporteController::class, 'estadisticas'])->name('reportes.estadisticas');
 
     // Rutas para exportar reportes en PDF
     Route::get('/productos/export/pdf', [ProductoController::class, 'exportPdf'])->name('productos.export.pdf')->middleware('role:administrador');

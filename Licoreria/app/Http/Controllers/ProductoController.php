@@ -64,13 +64,13 @@ class ProductoController extends Controller
     }
 
     // TODO Mostrar catalogo
-    public function catalogoShow(Producto $producto)
-    {
-        if (!$producto->activo) {
-            abort(404);
-        }
-        return view('productos.catalogo-show', compact('producto'));
-    }
+    // public function catalogoShow(Producto $producto)
+    // {
+    //     if (!$producto->activo) {
+    //         abort(404);
+    //     }
+    //     return view('productos.catalogo-show', compact('producto'));
+    // }
 
     /**
      * Show the form for creating a new resource.
