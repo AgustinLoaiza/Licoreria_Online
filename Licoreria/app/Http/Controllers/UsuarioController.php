@@ -113,6 +113,10 @@ class UsuarioController extends Controller
     {
         $usuario = Auth::user();
 
+        if (! $usuario instanceof Usuario) {
+            abort(403, 'Acceso no autorizado');
+        }
+
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:usuarios,email,' . $usuario->id,
@@ -142,6 +146,10 @@ class UsuarioController extends Controller
     public function updatePerfilRepartidor(Request $request)
     {
         $usuario = Auth::user();
+
+        if (! $usuario instanceof Usuario) {
+            abort(403, 'Acceso no autorizado');
+        }
 
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',

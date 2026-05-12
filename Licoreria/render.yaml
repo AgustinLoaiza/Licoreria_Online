@@ -1,0 +1,56 @@
+databases:
+  - name: licoreria-db
+    databaseName: BD_Licoreria
+    user: licoreria_user
+
+services:
+  - type: web
+    name: licoreria-online
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /up
+    envVars:
+      - key: APP_NAME
+        value: Licoreria Online
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false
+      - key: APP_KEY
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: licoreria-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: licoreria-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: licoreria-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: licoreria-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: licoreria-db
+          property: password
+      - key: DB_SSLMODE
+        value: require
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_SECURE_COOKIE
+        value: true
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
