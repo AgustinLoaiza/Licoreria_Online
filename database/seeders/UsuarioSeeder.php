@@ -13,57 +13,50 @@ class UsuarioSeeder extends Seeder
      */
     public function run(): void
     {
-        Usuario::create([
+        Usuario::updateOrCreate(['email' => 'admin@example.com'], [
             'nombre' => 'Administrador',
-            'email' => 'admin@example.com',
             'password' => bcrypt('password'),
             'telefono' => '1234567890',
             'rol' => 'administrador',
         ]);
 
-        Usuario::create([
+        Usuario::updateOrCreate(['email' => 'cliente1@example.com'], [
             'nombre' => 'Cliente1',
-            'email' => 'cliente1@example.com',
             'password' => bcrypt('password'),
             'telefono' => '1234567890',
             'rol' => 'cliente',
         ]);
 
-        Usuario::create([
+        Usuario::updateOrCreate(['email' => 'cliente2@example.com'], [
             'nombre' => 'Cliente2',
-            'email' => 'cliente2@example.com',
             'password' => bcrypt('password'),
             'telefono' => '1234567890',
             'rol' => 'cliente',
         ]);
 
-        Usuario::create([
+        Usuario::updateOrCreate(['email' => 'cliente3@example.com'], [
             'nombre' => 'Cliente3',
-            'email' => 'cliente3@example.com',
             'password' => bcrypt('password'),
             'telefono' => '1234567890',
             'rol' => 'cliente',
         ]);
 
-        Usuario::create([
+        Usuario::updateOrCreate(['email' => 'repartidor1@example.com'], [
             'nombre' => 'Repartidor1',
-            'email' => 'repartidor1@example.com',
             'password' => bcrypt('password'),
             'telefono' => '1234567890',
             'rol' => 'repartidor',
         ]);
 
-        Usuario::create([
+        Usuario::updateOrCreate(['email' => 'repartidor2@example.com'], [
             'nombre' => 'Repartidor2',
-            'email' => 'repartidor2@example.com',
             'password' => bcrypt('password'),
             'telefono' => '1234567890',
             'rol' => 'repartidor',
         ]);
 
-        Usuario::create([
+        Usuario::updateOrCreate(['email' => 'repartidor3@example.com'], [
             'nombre' => 'Repartidor3',
-            'email' => 'repartidor3@example.com',
             'password' => bcrypt('password'),
             'telefono' => '1234567890',
             'rol' => 'repartidor',

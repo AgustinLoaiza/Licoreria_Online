@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Delivery;
+use App\Models\Usuario;
 
 class DeliverySeeder extends Seeder
 {
@@ -13,8 +14,15 @@ class DeliverySeeder extends Seeder
      */
     public function run(): void
     {
-        Delivery::create([
-            'usuario_id' => 5,
+        $repartidor = Usuario::where('email', 'repartidor1@example.com')->first();
+
+        if (!$repartidor) {
+            return;
+        }
+
+        Delivery::updateOrCreate([
+            'usuario_id' => $repartidor->id,
+        ], [
             'estado' => 'disponible',
         ]);
     }
