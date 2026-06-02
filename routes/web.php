@@ -47,15 +47,15 @@ Route::middleware('auth')->group(function() {
     // PRODUCTOS PARA ADMIN/REPARTIDOR (gestión)
     Route::middleware('role:administrador,repartidor')->prefix('administrador')->group(function () {
         Route::get('/productos', [ProductoController::class, 'index'])->name('productos.admin.index');
-        Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
-        Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
+        Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.admin.create');
+        Route::post('/productos', [ProductoController::class, 'store'])->name('productos.admin.store');
         Route::post('/productos/{producto}/reabastecer', [ProductoController::class, 'reabastecer'])->name('productos.reabastecer')->middleware('role:administrador');
         Route::post('/productos/{producto}/cambiar-estado', [ProductoController::class, 'cambiarEstado'])->name('productos.cambiar-estado')->middleware('role:administrador,repartidor');
-        Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
-        Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])->name('productos.catalogo.show');
-        Route::get('/productos/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.edit');
-        Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
-        Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
+        Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.admin.show');
+        Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])->name('productos.admin.catalogo.show');
+        Route::get('/productos/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.admin.edit');
+        Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.admin.update');
+        Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.admin.destroy');
     });
     // PRODUCTOS PARA CLIENTES (vista individual)
     Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])
