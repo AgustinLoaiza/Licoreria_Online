@@ -13,6 +13,10 @@ class ProductoSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Producto::query()->count() > 0) {
+            return;
+        }
+
         Producto::create([
             'nombre' => 'Whisky Old Parr',
             'imagen' => null,
