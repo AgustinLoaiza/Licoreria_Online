@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade');
-            $table->enum('metodo_pago', ['efectivo', 'qr', 'tarjeta'])->default('pendiente');
+            $table->enum('metodo_pago', ['efectivo', 'qr', 'tarjeta'])->default('efectivo');
             $table->string('comprobante')->nullable();
             $table->enum('estado', ['pendiente', 'pagado'])->default('pendiente');
             $table->timestamp('fecha_pago')->nullable();

@@ -14,16 +14,12 @@ class DeliverySeeder extends Seeder
      */
     public function run(): void
     {
-        $repartidor = Usuario::where('email', 'repartidor1@example.com')->first();
-
-        if (!$repartidor) {
-            return;
-        }
-
-        Delivery::updateOrCreate([
-            'usuario_id' => $repartidor->id,
-        ], [
-            'estado' => 'disponible',
-        ]);
+        Usuario::query()->where('rol', 'repartidor')->get()->each(function (Usuario $repartidor): void {
+            Delivery::updateOrCreate([
+                'usuario_id' => $repartidor->id,
+            ], [
+                'estado' => 'disponible',
+            ]);
+        });
     }
 }
