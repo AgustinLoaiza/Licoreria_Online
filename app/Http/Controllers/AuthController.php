@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return $this->redirectByRole(Auth::user());
+            return redirect()->intended($this->redirectPathByRole(Auth::user()));
         }
 
         throw ValidationException::withMessages([
@@ -56,20 +56,27 @@ class AuthController extends Controller
         ]);
 
         Auth::login($usuario);
-        return $this->redirectByRole($usuario);
+        $request->session()->regenerate();
+
+        return redirect()->intended($this->redirectPathByRole($usuario));
     }
 
     private function redirectByRole($user)
     {
+        return redirect($this->redirectPathByRole($user));
+    }
+
+    private function redirectPathByRole($user): string
+    {
         switch ($user->rol)
         {
             case 'administrador':
-                return redirect()->route('dashboard.administrador');
+                return route('dashboard.administrador');
             case 'repartidor':
-                return redirect()->route('dashboard.repartidor');
+                return route('dashboard.repartidor');
             case 'cliente':
             default:
-                return redirect()->route('dashboard.cliente');
+                return route('dashboard.cliente');
         }
     }
 
@@ -79,6 +86,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('productos.catalogo');
     }
 }

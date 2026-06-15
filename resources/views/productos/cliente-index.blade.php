@@ -4,6 +4,11 @@
 @section('page-title', 'Catalogo')
 
 @section('content')
+@php
+    // CAMBIAR AQUI: coloca el numero de WhatsApp del dueno, con codigo de pais y sin signos.
+    $whatsappNumber = '59172879400';
+@endphp
+
 <div class="space-y-6">
     <section class="brand-shell overflow-hidden rounded-2xl p-5 text-white shadow-xl sm:p-8">
         <div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
@@ -78,6 +83,11 @@
 
     <section class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         @forelse($productos as $producto)
+            @php
+                $whatsappProductMessage = 'Hola, quiero mas informacion del producto ' . $producto->nombre . '. Tengo una duda.';
+                $whatsappProductUrl = 'https://wa.me/' . $whatsappNumber . '?text=' . rawurlencode($whatsappProductMessage);
+            @endphp
+
             <article class="product-card overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg">
                 <div class="relative h-48 bg-[#11151d]">
                     @if($producto->cantidad == 0)
@@ -124,7 +134,7 @@
                         @endif
 
                         <div class="mt-4 grid grid-cols-[auto_1fr] gap-2">
-                            <a href="{{ route('productos.show', $producto) }}"
+                            <a href="{{ route('productos.catalogo.show', $producto) }}"
                                class="flex items-center justify-center rounded-lg border px-3 py-2 text-gray-700 hover:bg-gray-50"
                                aria-label="Ver producto">
                                 <i class="fas fa-eye"></i>
@@ -134,6 +144,12 @@
                                     {{ $producto->cantidad == 0 ? 'disabled' : '' }}>
                                 <i class="fas fa-cart-plus mr-2"></i>Agregar
                             </button>
+                            <a href="{{ $whatsappProductUrl }}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="col-span-2 flex items-center justify-center rounded-lg border border-green-200 bg-green-50 px-4 py-2 text-sm font-black text-green-800 hover:bg-green-100">
+                                <i class="fab fa-whatsapp mr-2"></i>Tengo dudas
+                            </a>
                         </div>
                     </div>
                 </div>

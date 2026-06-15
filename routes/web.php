@@ -11,6 +11,21 @@ use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+Route::get('/', function() {
+    if (!Auth::check()) {
+        return redirect()->route('productos.catalogo');
+    }
+
+    return match (Auth::user()->rol) {
+        'administrador' => redirect()->route('dashboard.administrador'),
+        'repartidor' => redirect()->route('dashboard.repartidor'),
+        default => redirect()->route('dashboard.cliente'),
+    };
+});
+
+Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
+Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])->name('productos.catalogo.show');
+
 // Rutas publicas
 Route::middleware('guest')->group(function() {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -42,8 +57,6 @@ Route::middleware('auth')->group(function() {
     Route::resource('productos', ProductoController::class)->middleware('role:administrador,cliente,repartidor');
 
     // PRODUCTOS PARA CLIENTES (catálogo)
-    Route::get('/catalogo', [ProductoController::class, 'catalogo'])->name('productos.catalogo');
-
     // PRODUCTOS PARA ADMIN/REPARTIDOR (gestión)
     Route::middleware('role:administrador,repartidor')->prefix('administrador')->group(function () {
         Route::get('/productos', [ProductoController::class, 'index'])->name('productos.admin.index');
@@ -57,11 +70,6 @@ Route::middleware('auth')->group(function() {
         Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.admin.update');
         Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.admin.destroy');
     });
-    // PRODUCTOS PARA CLIENTES (vista individual)
-    Route::get('/catalogo/{producto}', [ProductoController::class, 'catalogoShow'])
-        ->name('productos.catalogo.show')
-        ->middleware('role:cliente');
-
     // CRUD de pedidos
     Route::resource('pedidos', PedidoController::class);
     Route::post('/pedidos/{pedido}/cambiar-estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar-estado');
@@ -83,14 +91,4 @@ Route::middleware('auth')->group(function() {
     Route::get('/productos/export/pdf', [ProductoController::class, 'exportPdf'])->name('productos.export.pdf')->middleware('role:administrador');
     Route::get('/ventas/export/pdf', [VentaController::class, 'exportPdf'])->name('ventas.export.pdf')->middleware('role:administrador');
 
-    Route::get('/', function() {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-        return match (Auth::user()->rol) {
-            'administrador' => redirect()->route('dashboard.administrador'),
-            'repartidor' => redirect()->route('dashboard.repartidor'),
-            default => redirect()->route('dashboard.cliente'),
-        };
-    });
 });

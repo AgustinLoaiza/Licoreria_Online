@@ -52,21 +52,32 @@
     @stack('styles')
 </head>
 <body class="min-h-screen text-gray-950">
+    @php
+        $whatsappNumber = '59172879400';
+        $facebookUrl = 'https://www.facebook.com/share/1DABFWuLas/';
+        $instagramUrl = 'https://www.instagram.com/rye_licoreria?igsh=OHBpZTRmd3U0dzRr';
+        $whatsappGeneralMessage = 'Hola, quiero mas informacion sobre R&E Bebidas.';
+        $whatsappGeneralUrl = 'https://wa.me/' . $whatsappNumber . '?text=' . rawurlencode($whatsappGeneralMessage);
+        $clienteHomeUrl = Auth::check() ? route('dashboard.cliente') : route('productos.catalogo');
+        $pedidosUrl = Auth::check() ? route('pedidos.index') : route('login');
+        $displayName = Auth::check() ? Auth::user()->nombre : 'Visitante';
+    @endphp
+
     <header class="sticky top-0 z-40 border-b border-white/10 brand-shell text-white shadow-xl">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex min-h-20 items-center justify-between gap-4 py-3">
-                <a href="{{ route('dashboard.cliente') }}" class="flex min-w-0 items-center gap-3">
+                <a href="{{ $clienteHomeUrl }}" class="flex min-w-0 items-center gap-3">
                     <img src="{{ asset('images/logo-licoreria.jpeg') }}"
                          alt="R&E Distribuidora de Bebidas"
                          class="h-12 w-12 shrink-0 rounded-lg border border-white/15 object-cover shadow-md">
                     <div class="min-w-0">
                         <p class="truncate text-lg font-black leading-tight">R&E Bebidas</p>
-                        <p class="truncate text-xs text-amber-100">Hola, {{ Auth::user()->nombre }}</p>
+                        <p class="truncate text-xs text-amber-100">Hola, {{ $displayName }}</p>
                     </div>
                 </a>
 
                 <nav class="hidden items-center gap-2 lg:flex">
-                    <a href="{{ route('dashboard.cliente') }}"
+                    <a href="{{ $clienteHomeUrl }}"
                        class="rounded-lg px-3 py-2 text-sm font-semibold transition hover:bg-white/10 {{ request()->routeIs('dashboard.cliente') ? 'bg-white/15 text-amber-200' : 'text-gray-100' }}">
                         <i class="fas fa-home mr-2"></i>Inicio
                     </a>
@@ -74,7 +85,7 @@
                        class="rounded-lg px-3 py-2 text-sm font-semibold transition hover:bg-white/10 {{ request()->routeIs('productos.catalogo') ? 'bg-white/15 text-amber-200' : 'text-gray-100' }}">
                         <i class="fas fa-store mr-2"></i>Catalogo
                     </a>
-                    <a href="{{ route('pedidos.index') }}"
+                    <a href="{{ $pedidosUrl }}"
                        class="rounded-lg px-3 py-2 text-sm font-semibold transition hover:bg-white/10 {{ request()->routeIs('pedidos.*') ? 'bg-white/15 text-amber-200' : 'text-gray-100' }}">
                         <i class="fas fa-receipt mr-2"></i>Mis pedidos
                         @if($pedidos_pendientes ?? 0)
@@ -116,6 +127,7 @@
                         </div>
                     </div>
 
+                    @auth
                     <div class="relative hidden sm:block">
                         <button id="user-menu-toggle" class="flex items-center gap-2 rounded-lg border border-white/10 bg-white/10 px-3 py-2 transition hover:bg-white/15">
                             <span class="flex h-8 w-8 items-center justify-center rounded-full bg-amber-400 text-gray-950">
@@ -137,6 +149,16 @@
                             </form>
                         </div>
                     </div>
+                    @else
+                    <div class="hidden items-center gap-2 sm:flex">
+                        <a href="{{ route('login') }}" class="rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm font-bold hover:bg-white/15">
+                            Iniciar sesion
+                        </a>
+                        <a href="{{ route('register') }}" class="rounded-lg bg-amber-400 px-3 py-2 text-sm font-black text-gray-950 hover:bg-amber-300">
+                            Registrarse
+                        </a>
+                    </div>
+                    @endauth
 
                     <button id="mobile-menu-toggle"
                             class="rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-white lg:hidden"
@@ -148,15 +170,16 @@
 
             <div id="mobile-menu" class="hidden border-t border-white/10 py-3 lg:hidden">
                 <div class="grid gap-2 text-sm font-semibold">
-                    <a href="{{ route('dashboard.cliente') }}" class="rounded-lg px-3 py-3 hover:bg-white/10">
+                    <a href="{{ $clienteHomeUrl }}" class="rounded-lg px-3 py-3 hover:bg-white/10">
                         <i class="fas fa-home mr-2 text-amber-300"></i>Inicio
                     </a>
                     <a href="{{ route('productos.catalogo') }}" class="rounded-lg px-3 py-3 hover:bg-white/10">
                         <i class="fas fa-store mr-2 text-amber-300"></i>Catalogo
                     </a>
-                    <a href="{{ route('pedidos.index') }}" class="rounded-lg px-3 py-3 hover:bg-white/10">
+                    <a href="{{ $pedidosUrl }}" class="rounded-lg px-3 py-3 hover:bg-white/10">
                         <i class="fas fa-receipt mr-2 text-amber-300"></i>Mis pedidos
                     </a>
+                    @auth
                     <a href="{{ route('usuarios.show', Auth::user()->id) }}" class="rounded-lg px-3 py-3 hover:bg-white/10">
                         <i class="fas fa-user-circle mr-2 text-amber-300"></i>Mi perfil
                     </a>
@@ -166,6 +189,14 @@
                             <i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesion
                         </button>
                     </form>
+                    @else
+                    <a href="{{ route('login') }}" class="rounded-lg px-3 py-3 hover:bg-white/10">
+                        <i class="fas fa-right-to-bracket mr-2 text-amber-300"></i>Iniciar sesion
+                    </a>
+                    <a href="{{ route('register') }}" class="rounded-lg px-3 py-3 hover:bg-white/10">
+                        <i class="fas fa-user-plus mr-2 text-amber-300"></i>Registrarse
+                    </a>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -193,9 +224,13 @@
             <div>
                 <h3 class="mb-4 text-lg font-black">Contacto rapido</h3>
                 <div class="space-y-3 text-sm text-gray-200">
-                    <a href="tel:+51999999999" class="flex items-center gap-3 hover:text-amber-200">
+                    <a href="{{ $whatsappGeneralUrl }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 hover:text-amber-200">
+                        <i class="fab fa-whatsapp flex h-9 w-9 items-center justify-center rounded-lg bg-green-600"></i>
+                        WhatsApp
+                    </a>
+                    <a href="tel:+59172879400" class="flex items-center gap-3 hover:text-amber-200">
                         <i class="fas fa-phone flex h-9 w-9 items-center justify-center rounded-lg bg-red-600"></i>
-                        +51 999 999 999
+                        +591 72879400
                     </a>
                     <div class="flex items-center gap-3">
                         <i class="fas fa-clock flex h-9 w-9 items-center justify-center rounded-lg bg-red-600"></i>
@@ -205,6 +240,18 @@
                         <i class="fas fa-credit-card flex h-9 w-9 items-center justify-center rounded-lg bg-red-600"></i>
                         QR, efectivo y tarjeta
                     </div>
+                </div>
+
+                <div class="mt-5 flex gap-3">
+                    <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition hover:bg-blue-600" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition hover:bg-pink-600" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="{{ $whatsappGeneralUrl }}" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition hover:bg-green-600" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
                 </div>
             </div>
 
@@ -220,6 +267,14 @@
             </div>
         </div>
     </footer>
+
+    <a href="{{ $whatsappGeneralUrl }}"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-600 text-2xl text-white shadow-2xl shadow-green-900/30 transition hover:-translate-y-1 hover:bg-green-700"
+       aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
