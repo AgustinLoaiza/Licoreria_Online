@@ -113,7 +113,7 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-        $venta->load('pedido.usuario', 'pedido.detalle_pedidos.producto');
+        $venta->load('pedido.usuario', 'pedido.delivery.usuario', 'pedido.detalles.producto');
         return view('ventas.show', compact('venta'));
     }
 

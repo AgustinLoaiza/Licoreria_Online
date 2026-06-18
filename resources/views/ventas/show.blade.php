@@ -27,14 +27,14 @@
                         'rechazado' => 'bg-red-100 text-red-800 border-red-300'
                     ];
                 @endphp
-                <div class="inline-flex items-center px-4 py-2 rounded-lg border text-lg {{ $estadoColors[$venta->estado] }}">
+                <div class="inline-flex items-center px-4 py-2 rounded-lg border text-lg {{ $estadoColors[$venta->estado] ?? 'bg-gray-100 text-gray-800 border-gray-300' }}">
                     <i class="fas fa-{{ $venta->estado == 'pendiente' ? 'clock' :
                                        ($venta->estado == 'pagado' ? 'check-circle' :
                                        ($venta->estado == 'verificado' ? 'shield-check' : 'times-circle')) }} mr-2"></i>
                     <span class="font-bold">{{ ucfirst($venta->estado) }}</span>
                 </div>
                 <p class="text-3xl font-bold text-gray-800 mt-2">
-                    S/ {{ number_format($venta->pedido->monto_total, 2) }}
+                    S/ {{ number_format($venta->pedido->monto_total ?? 0, 2) }}
                 </p>
             </div>
         </div>
@@ -71,8 +71,8 @@
                                     'cancelado' => 'bg-red-100 text-red-800'
                                 ];
                             @endphp
-                            <span class="px-3 py-1 rounded-full text-sm font-medium {{ $pedidoColors[$venta->pedido->estado] }}">
-                                {{ ucfirst($venta->pedido->estado) }}
+                            <span class="px-3 py-1 rounded-full text-sm font-medium {{ $pedidoColors[$venta->pedido->estado] ?? 'bg-gray-100 text-gray-800' }}">
+                                {{ ucfirst(str_replace('_', ' ', $venta->pedido->estado)) }}
                             </span>
                         </div>
                         <div>
@@ -94,7 +94,7 @@
                             <div class="flex items-center justify-between p-3 border rounded-lg">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                                        @if($detalle->producto->imagen)
+                                        @if($detalle->producto && $detalle->producto->imagen)
                                         <img src="{{ asset('storage/' . $detalle->producto->imagen) }}"
                                              alt="{{ $detalle->producto->nombre }}"
                                              class="h-full w-full object-cover rounded-lg">
@@ -103,8 +103,8 @@
                                         @endif
                                     </div>
                                     <div>
-                                        <p class="font-medium">{{ $detalle->producto->nombre }}</p>
-                                        <p class="text-sm text-gray-600">{{ $detalle->producto->tipo }}</p>
+                                        <p class="font-medium">{{ $detalle->producto->nombre ?? 'Producto no disponible' }}</p>
+                                        <p class="text-sm text-gray-600">{{ $detalle->producto->tipo ?? 'Sin categoria' }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
