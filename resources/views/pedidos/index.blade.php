@@ -112,8 +112,8 @@
                                 'cancelado' => 'fa-times'
                             ];
                         @endphp
-                        <div class="inline-flex items-center px-3 py-1 rounded-full border {{ $statusColors[$pedido->estado] }}">
-                            <i class="fas {{ $statusIcons[$pedido->estado] }} mr-2"></i>
+                        <div class="inline-flex items-center px-3 py-1 rounded-full border {{ $statusColors[$pedido->estado] ?? 'bg-gray-100 text-gray-800 border-gray-300' }}">
+                            <i class="fas {{ $statusIcons[$pedido->estado] ?? 'fa-circle-info' }} mr-2"></i>
                             <span class="font-semibold">{{ ucfirst($pedido->estado) }}</span>
                         </div>
 
@@ -211,7 +211,7 @@
                                     'rechazado' => 'text-red-600 bg-red-100'
                                 ];
                             @endphp
-                            <span class="px-2 py-1 rounded-full {{ $pagoColors[$pedido->venta->estado] }} mr-2">
+                            <span class="px-2 py-1 rounded-full {{ $pagoColors[$pedido->venta->estado] ?? 'text-gray-600 bg-gray-100' }} mr-2">
                                 Pago: {{ ucfirst($pedido->venta->estado) }}
                             </span>
                             <span class="text-gray-600">

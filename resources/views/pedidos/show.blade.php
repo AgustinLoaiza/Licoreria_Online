@@ -44,8 +44,8 @@
                         'cancelado' => 'fa-times'
                     ];
                 @endphp
-                <div class="inline-flex items-center px-4 py-2 rounded-lg border text-lg {{ $statusColors[$pedido->estado] }}">
-                    <i class="fas {{ $statusIcons[$pedido->estado] }} mr-2"></i>
+                <div class="inline-flex items-center px-4 py-2 rounded-lg border text-lg {{ $statusColors[$pedido->estado] ?? 'bg-gray-100 text-gray-800 border-gray-300' }}">
+                    <i class="fas {{ $statusIcons[$pedido->estado] ?? 'fa-circle-info' }} mr-2"></i>
                     <span class="font-bold">{{ ucfirst($pedido->estado) }}</span>
                 </div>
 
@@ -158,8 +158,8 @@
                                     'rechazado' => 'fa-times-circle'
                                 ];
                             @endphp
-                            <div class="inline-flex items-center px-4 py-2 rounded-lg border {{ $pagoColors[$pedido->venta->estado] }}">
-                                <i class="fas {{ $pagoIcons[$pedido->venta->estado] }} mr-2"></i>
+                            <div class="inline-flex items-center px-4 py-2 rounded-lg border {{ $pagoColors[$pedido->venta->estado] ?? 'bg-gray-100 text-gray-800 border-gray-300' }}">
+                                <i class="fas {{ $pagoIcons[$pedido->venta->estado] ?? 'fa-circle-info' }} mr-2"></i>
                                 <span class="font-semibold">{{ ucfirst($pedido->venta->estado) }}</span>
                             </div>
                         </div>

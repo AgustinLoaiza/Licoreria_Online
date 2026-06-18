@@ -154,14 +154,12 @@
                             @php
                                 $statusColors = [
                                     'pendiente' => 'bg-yellow-100 text-yellow-800',
-                                    'confirmado' => 'bg-blue-100 text-blue-800',
-                                    'en_preparacion' => 'bg-purple-100 text-purple-800',
-                                    'en_camino' => 'bg-indigo-100 text-indigo-800',
+                                    'enviado' => 'bg-blue-100 text-blue-800',
                                     'entregado' => 'bg-green-100 text-green-800',
                                     'cancelado' => 'bg-red-100 text-red-800'
                                 ];
                             @endphp
-                            <span class="px-3 py-1 rounded-full text-xs font-medium {{ $statusColors[$pedido->estado] }}">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium {{ $statusColors[$pedido->estado] ?? 'bg-gray-100 text-gray-800' }}">
                                 {{ ucfirst($pedido->estado) }}
                             </span>
                         </td>
