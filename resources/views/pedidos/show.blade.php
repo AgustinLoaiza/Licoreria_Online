@@ -50,7 +50,7 @@
                 </div>
 
                 <!-- Total -->
-                <p class="text-3xl font-bold text-gray-800 mt-2">S/ {{ number_format($pedido->monto_total, 2) }}</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">Bs {{ number_format($pedido->monto_total, 2) }}</p>
             </div>
         </div>
     </div>
@@ -87,8 +87,8 @@
                             </div>
 
                             <div class="text-right">
-                                <p class="text-sm text-gray-600">{{ $detalle->cantidad }} x S/ {{ number_format($detalle->precio_unitario, 2) }}</p>
-                                <p class="text-lg font-bold text-gray-800">S/ {{ number_format($detalle->subtotal, 2) }}</p>
+                                <p class="text-sm text-gray-600">{{ $detalle->cantidad }} x Bs {{ number_format($detalle->precio_unitario, 2) }}</p>
+                                <p class="text-lg font-bold text-gray-800">Bs {{ number_format($detalle->subtotal, 2) }}</p>
                             </div>
                         </div>
                         @endforeach
@@ -99,15 +99,15 @@
                         <div class="space-y-2">
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Subtotal:</span>
-                                <span class="font-semibold">S/ {{ number_format($pedido->monto_total, 2) }}</span>
+                                <span class="font-semibold">Bs {{ number_format($pedido->monto_total, 2) }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Delivery:</span>
-                                <span class="font-semibold">S/ 0.00</span>
+                                <span class="font-semibold">Bs 0.00</span>
                             </div>
                             <div class="flex justify-between text-lg font-bold border-t pt-2">
                                 <span>Total:</span>
-                                <span>S/ {{ number_format($pedido->monto_total, 2) }}</span>
+                                <span>Bs {{ number_format($pedido->monto_total, 2) }}</span>
                             </div>
                         </div>
                     </div>

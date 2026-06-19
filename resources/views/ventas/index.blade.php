@@ -13,7 +13,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Total Ventas</p>
-                    <p class="text-3xl font-bold text-gray-800">S/ {{ number_format($total_ventas, 2) }}</p>
+                    <p class="text-3xl font-bold text-gray-800">Bs {{ number_format($total_ventas, 2) }}</p>
                 </div>
                 <div class="bg-blue-100 p-3 rounded-full">
                     <i class="fas fa-chart-line text-blue-600 text-xl"></i>
@@ -26,7 +26,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Ventas Hoy</p>
-                    <p class="text-3xl font-bold text-gray-800">S/ {{ number_format($ventas_hoy, 2) }}</p>
+                    <p class="text-3xl font-bold text-gray-800">Bs {{ number_format($ventas_hoy, 2) }}</p>
                 </div>
                 <div class="bg-green-100 p-3 rounded-full">
                     <i class="fas fa-calendar-day text-green-600 text-xl"></i>
@@ -40,7 +40,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Pagos Pendientes</p>
-                    <p class="text-3xl font-bold text-gray-800">{{ $pagos_pendientes }} (S/ {{ number_format($pagos_pendientes_monto, 2) }})</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ $pagos_pendientes }} (Bs {{ number_format($pagos_pendientes_monto, 2) }})</p>
                 </div>
                 <div class="bg-yellow-100 p-3 rounded-full">
                     <i class="fas fa-clock text-yellow-600 text-xl"></i>
@@ -56,13 +56,13 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Ventas Verificadas</p>
-                    <p class="text-3xl font-bold text-gray-800">{{ $ventas_verificadas }} (S/ {{ number_format($total_verificadas, 2) }})</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ $ventas_verificadas }} (Bs {{ number_format($total_verificadas, 2) }})</p>
                 </div>
                 <div class="bg-purple-100 p-3 rounded-full">
                     <i class="fas fa-check-circle text-purple-600 text-xl"></i>
                 </div>
             </div>
-            <p class="text-sm text-gray-600 mt-2">Total: S/ {{ number_format($total_verificadas, 2) }}</p>
+            <p class="text-sm text-gray-600 mt-2">Total: Bs {{ number_format($total_verificadas, 2) }}</p>
         </div>
     </div>
 
@@ -213,7 +213,7 @@
                         <!-- Columna Monto -->
                         <td class="px-6 py-4">
                             <div class="text-lg font-bold text-gray-900">
-                                S/ {{ number_format($venta->pedido->monto_total, 2) }}
+                                Bs {{ number_format($venta->pedido->monto_total, 2) }}
                             </div>
                         </td>
 
@@ -357,7 +357,7 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <p class="font-bold text-gray-800">S/ {{ number_format($data['total'], 2) }}</p>
+                        <p class="font-bold text-gray-800">Bs {{ number_format($data['total'], 2) }}</p>
                         <p class="text-sm text-gray-600">
                             {{ $ventas->where('metodo_pago', $metodo)->count() }} ventas
                         </p>

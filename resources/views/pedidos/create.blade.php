@@ -16,7 +16,7 @@
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <p class="text-sm font-semibold text-gray-600">Total estimado</p>
-                        <p id="cart-total-display" class="text-3xl font-black text-red-700">S/ 0.00</p>
+                        <p id="cart-total-display" class="text-3xl font-black text-red-700">Bs 0.00</p>
                     </div>
                     <div class="flex flex-col gap-3 sm:flex-row">
                         <button type="button"
@@ -168,15 +168,15 @@
                         <div class="space-y-2 border-t pt-4">
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Subtotal</span>
-                                <span id="resumen-subtotal" class="font-bold">S/ 0.00</span>
+                                <span id="resumen-subtotal" class="font-bold">Bs 0.00</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Costo de delivery</span>
-                                <span class="font-bold">S/ 0.00</span>
+                                <span class="font-bold">Bs 0.00</span>
                             </div>
                             <div class="flex justify-between border-t pt-3 text-lg font-black">
                                 <span>Total a pagar</span>
-                                <span id="resumen-total" class="text-red-700">S/ 0.00</span>
+                                <span id="resumen-total" class="text-red-700">Bs 0.00</span>
                             </div>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
                     <div class="mb-4 flex items-center justify-between gap-4">
                         <div>
                             <p class="font-semibold text-gray-700">Confirmar pedido</p>
-                            <p id="total-confirmacion" class="text-2xl font-black text-red-700">S/ 0.00</p>
+                            <p id="total-confirmacion" class="text-2xl font-black text-red-700">Bs 0.00</p>
                         </div>
                         <div class="text-right">
                             <p class="text-sm text-gray-600">Tiempo estimado</p>
@@ -292,7 +292,7 @@ function actualizarVista() {
                         </div>
                         <div class="min-w-0">
                             <p class="truncate font-bold text-gray-950">${item.nombre}</p>
-                            <p class="text-sm text-gray-600">S/ ${item.precio.toFixed(2)} c/u</p>
+                            <p class="text-sm text-gray-600">Bs ${item.precio.toFixed(2)} c/u</p>
                         </div>
                     </div>
 
@@ -307,7 +307,7 @@ function actualizarVista() {
                             </button>
                         </div>
 
-                        <p class="w-24 text-right font-black text-gray-950">S/ ${subtotal.toFixed(2)}</p>
+                        <p class="w-24 text-right font-black text-gray-950">Bs ${subtotal.toFixed(2)}</p>
 
                         <button type="button" onclick="eliminarDelCarrito(${index})" class="text-red-500 hover:text-red-700" aria-label="Eliminar">
                             <i class="fas fa-trash"></i>
@@ -320,9 +320,9 @@ function actualizarVista() {
                 <div class="flex justify-between gap-4">
                     <div class="min-w-0">
                         <p class="truncate font-bold text-gray-950">${item.nombre}</p>
-                        <p class="text-sm text-gray-600">${item.cantidad} x S/ ${item.precio.toFixed(2)}</p>
+                        <p class="text-sm text-gray-600">${item.cantidad} x Bs ${item.precio.toFixed(2)}</p>
                     </div>
-                    <p class="shrink-0 font-bold">S/ ${subtotal.toFixed(2)}</p>
+                    <p class="shrink-0 font-bold">Bs ${subtotal.toFixed(2)}</p>
                 </div>
             `;
         });
@@ -331,10 +331,10 @@ function actualizarVista() {
     cartList.innerHTML = htmlCart;
     resumenProductos.innerHTML = htmlResumen;
 
-    document.getElementById('cart-total-display').textContent = `S/ ${total.toFixed(2)}`;
-    document.getElementById('resumen-subtotal').textContent = `S/ ${total.toFixed(2)}`;
-    document.getElementById('resumen-total').textContent = `S/ ${total.toFixed(2)}`;
-    document.getElementById('total-confirmacion').textContent = `S/ ${total.toFixed(2)}`;
+    document.getElementById('cart-total-display').textContent = `Bs ${total.toFixed(2)}`;
+    document.getElementById('resumen-subtotal').textContent = `Bs ${total.toFixed(2)}`;
+    document.getElementById('resumen-total').textContent = `Bs ${total.toFixed(2)}`;
+    document.getElementById('total-confirmacion').textContent = `Bs ${total.toFixed(2)}`;
 
     const confirmarBtn = document.getElementById('confirmar-btn');
     confirmarBtn.disabled = cart.length === 0;

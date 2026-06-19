@@ -32,7 +32,7 @@
                 <td>{{ $venta->pedido ? $venta->pedido->id : '-' }}</td>
                 <td>{{ ucfirst($venta->metodo_pago) }}</td>
                 <td>
-                    S/ {{ $venta->pedido ? number_format($venta->pedido->monto_total, 2) : '0.00' }}
+                    Bs {{ $venta->pedido ? number_format($venta->pedido->monto_total, 2) : '0.00' }}
                 </td>
                 <td>{{ ucfirst($venta->estado) }}</td>
                 <td>{{ $venta->created_at->format('d/m/Y H:i') }}</td>

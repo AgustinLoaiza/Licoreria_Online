@@ -28,7 +28,7 @@
                 <td>{{ $producto->id }}</td>
                 <td>{{ $producto->nombre }}</td>
                 <td>{{ $producto->tipo }}</td>
-                <td>S/ {{ number_format($producto->precio, 2) }}</td>
+                <td>Bs {{ number_format($producto->precio, 2) }}</td>
                 <td>{{ $producto->cantidad }}</td>
             </tr>
             @endforeach

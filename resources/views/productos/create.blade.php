@@ -64,11 +64,11 @@
                         <!-- Precio -->
                         <div>
                             <label for="precio" class="block text-sm font-medium text-gray-700 mb-2">
-                                Precio (S/) *
+                                Precio (Bs) *
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500">S/</span>
+                                    <span class="text-gray-500">Bs</span>
                                 </div>
                                 <input type="number"
                                        id="precio"

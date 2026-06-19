@@ -17,7 +17,7 @@
         <div class="w-full md:w-1/2 md:pl-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $producto->nombre }}</h2>
             <p class="text-gray-600 mb-4">{{ $producto->descripcion }}</p>
-            <p class="text-lg font-bold text-red-600 mb-2">S/ {{ number_format($producto->precio, 2) }}</p>
+            <p class="text-lg font-bold text-red-600 mb-2">Bs {{ number_format($producto->precio, 2) }}</p>
             <p class="text-sm text-gray-500 mb-2">Stock: {{ $producto->cantidad }} unidades</p>
             <div class="flex space-x-3 mt-6">
                 <button onclick="addToCart({{ $producto->id }}, '{{ addslashes($producto->nombre) }}', {{ $producto->precio }})"

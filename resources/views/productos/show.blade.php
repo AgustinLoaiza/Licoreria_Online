@@ -80,7 +80,7 @@
                     <!-- Precio -->
                     <div>
                         <h3 class="text-lg font-semibold text-gray-700 mb-2">Precio</h3>
-                        <p class="text-4xl font-bold text-red-600">S/ {{ number_format($producto->precio, 2) }}</p>
+                        <p class="text-4xl font-bold text-red-600">Bs {{ number_format($producto->precio, 2) }}</p>
                     </div>
 
                     <!-- Stock -->

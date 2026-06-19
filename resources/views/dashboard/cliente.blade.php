@@ -102,7 +102,7 @@
 
                     <div class="flex justify-between items-center">
                         <div>
-                            <p class="text-xl font-bold text-red-600">S/ {{ number_format($producto->precio, 2) }}</p>
+                            <p class="text-xl font-bold text-red-600">Bs {{ number_format($producto->precio, 2) }}</p>
                             <p class="text-xs text-gray-500">Stock: {{ $producto->cantidad }}</p>
                         </div>
 
@@ -148,7 +148,7 @@
                             {{ $pedido->fecha_pedido ? $pedido->fecha_pedido->format('d/m/Y H:i') : '-' }}
                         </td>
                         <td class="py-3">
-                            <span class="font-semibold">S/ {{ number_format($pedido->monto_total, 2) }}</span>
+                            <span class="font-semibold">Bs {{ number_format($pedido->monto_total, 2) }}</span>
                         </td>
                         <td class="py-3">
                             @php

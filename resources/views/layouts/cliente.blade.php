@@ -117,7 +117,7 @@
                                 <div class="mt-4 border-t pt-4">
                                     <div class="mb-3 flex justify-between text-sm">
                                         <span class="font-semibold text-gray-600">Total</span>
-                                        <span id="cart-total" class="text-lg font-black text-red-700">S/ 0.00</span>
+                                        <span id="cart-total" class="text-lg font-black text-red-700">Bs 0.00</span>
                                     </div>
                                     <button onclick="checkout()" class="brand-button w-full rounded-lg py-3 text-sm font-black text-white transition">
                                         Proceder al pago
@@ -297,7 +297,7 @@
                             <div class="flex items-start justify-between gap-3">
                                 <div class="min-w-0">
                                     <p class="truncate font-bold">${item.nombre}</p>
-                                    <p class="text-sm text-gray-600">S/ ${item.precio.toFixed(2)} x ${item.cantidad}</p>
+                                    <p class="text-sm text-gray-600">Bs ${item.precio.toFixed(2)} x ${item.cantidad}</p>
                                 </div>
                                 <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700" aria-label="Quitar producto">
                                     <i class="fas fa-trash"></i>
@@ -313,7 +313,7 @@
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
-                                <span class="font-black text-red-700">S/ ${(item.precio * item.cantidad).toFixed(2)}</span>
+                                <span class="font-black text-red-700">Bs ${(item.precio * item.cantidad).toFixed(2)}</span>
                             </div>
                         </div>
                     `;
@@ -321,7 +321,7 @@
             }
 
             $('#cart-items').html(itemsHtml);
-            $('#cart-total').text('S/ ' + total.toFixed(2));
+            $('#cart-total').text('Bs ' + total.toFixed(2));
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 

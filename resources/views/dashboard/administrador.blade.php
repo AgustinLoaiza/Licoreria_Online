@@ -13,7 +13,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm">Total Ventas</p>
-                    <p class="text-3xl font-bold text-gray-800">S/ {{ number_format($total_ventas, 2) }}</p>
+                    <p class="text-3xl font-bold text-gray-800">Bs {{ number_format($total_ventas, 2) }}</p>
                 </div>
                 <div class="bg-blue-100 p-3 rounded-full">
                     <i class="fas fa-chart-line text-blue-600 text-xl"></i>
@@ -118,7 +118,7 @@
                                 </div>
                             </td>
                             <td class="py-3">
-                                <span class="font-semibold">S/ {{ number_format($pedido->monto_total, 2) }}</span>
+                                <span class="font-semibold">Bs {{ number_format($pedido->monto_total, 2) }}</span>
                             </td>
                             <td class="py-3">
                                 @php
@@ -192,7 +192,7 @@
                             {{ $pago->pedido->usuario->nombre }}
                         </td>
                         <td class="py-3">
-                            <span class="font-semibold">S/ {{ number_format($pago->pedido->monto_total, 2) }}</span>
+                            <span class="font-semibold">Bs {{ number_format($pago->pedido->monto_total, 2) }}</span>
                         </td>
                         <td class="py-3">
                             @if($pago->comprobante)
@@ -258,7 +258,7 @@
         data: {
             labels: @json($labels),
             datasets: [{
-                label: 'Ventas (S/)',
+                label: 'Ventas (Bs)',
                 data: @json($data),
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -282,7 +282,7 @@
                     },
                     ticks: {
                         callback: function(value) {
-                            return 'S/ ' + value.toLocaleString();
+                            return 'Bs ' + value.toLocaleString();
                         }
                     }
                 },

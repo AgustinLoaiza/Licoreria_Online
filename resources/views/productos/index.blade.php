@@ -145,7 +145,7 @@
                         <!-- Columna Precio -->
                         <td class="px-6 py-4">
                             <div class="text-sm font-semibold text-gray-900">
-                                S/ {{ number_format($producto->precio, 2) }}
+                                Bs {{ number_format($producto->precio, 2) }}
                             </div>
                         </td>
 

@@ -34,7 +34,7 @@
                     <span class="font-bold">{{ ucfirst($venta->estado) }}</span>
                 </div>
                 <p class="text-3xl font-bold text-gray-800 mt-2">
-                    S/ {{ number_format($venta->pedido->monto_total ?? 0, 2) }}
+                    Bs {{ number_format($venta->pedido->monto_total ?? 0, 2) }}
                 </p>
             </div>
         </div>
@@ -108,8 +108,8 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-sm text-gray-600">{{ $detalle->cantidad }} x S/ {{ number_format($detalle->precio_unitario, 2) }}</p>
-                                    <p class="font-bold">S/ {{ number_format($detalle->subtotal, 2) }}</p>
+                                    <p class="text-sm text-gray-600">{{ $detalle->cantidad }} x Bs {{ number_format($detalle->precio_unitario, 2) }}</p>
+                                    <p class="font-bold">Bs {{ number_format($detalle->subtotal, 2) }}</p>
                                 </div>
                             </div>
                             @endforeach

@@ -104,7 +104,7 @@
                     <div class="flex justify-between items-center">
                         <div>
                             <p class="text-sm text-gray-600">Total:</p>
-                            <p class="font-bold text-lg">S/ {{ number_format($pedido->monto_total, 2) }}</p>
+                            <p class="font-bold text-lg">Bs {{ number_format($pedido->monto_total, 2) }}</p>
                         </div>
 
                         <div class="flex space-x-2">
@@ -156,7 +156,7 @@
                         <p class="text-sm text-gray-600">{{ $pedido->fecha_pedido ? $pedido->fecha_pedido->format('d/m H:i') : '-' }}</p>
                     </div>
                     <div class="text-right">
-                        <p class="font-semibold">S/ {{ number_format($pedido->monto_total, 2) }}</p>
+                        <p class="font-semibold">Bs {{ number_format($pedido->monto_total, 2) }}</p>
                         <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                             Entregado
                         </span>

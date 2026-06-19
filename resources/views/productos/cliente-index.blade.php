@@ -126,7 +126,7 @@
                     @endif
 
                     <div class="mt-auto pt-4">
-                        <p class="text-2xl font-black text-red-700">S/ {{ number_format($producto->precio, 2) }}</p>
+                        <p class="text-2xl font-black text-red-700">Bs {{ number_format($producto->precio, 2) }}</p>
                         @if($producto->cantidad > 0)
                             <p class="mt-1 text-xs font-semibold text-gray-500">Stock: {{ $producto->cantidad }} unidades</p>
                         @else

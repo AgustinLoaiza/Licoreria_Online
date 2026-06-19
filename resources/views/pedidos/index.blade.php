@@ -118,7 +118,7 @@
                         </div>
 
                         <!-- Total -->
-                        <p class="text-2xl font-bold text-gray-800 mt-2">S/ {{ number_format($pedido->monto_total, 2) }}</p>
+                        <p class="text-2xl font-bold text-gray-800 mt-2">Bs {{ number_format($pedido->monto_total, 2) }}</p>
                     </div>
                 </div>
 
@@ -182,10 +182,10 @@
                                 </div>
                                 <div>
                                     <p class="font-medium">{{ $detalle->producto->nombre }}</p>
-                                    <p class="text-sm text-gray-600">{{ $detalle->cantidad }} x S/ {{ number_format($detalle->precio_unitario, 2) }}</p>
+                                    <p class="text-sm text-gray-600">{{ $detalle->cantidad }} x Bs {{ number_format($detalle->precio_unitario, 2) }}</p>
                                 </div>
                             </div>
-                            <p class="font-semibold">S/ {{ number_format($detalle->subtotal, 2) }}</p>
+                            <p class="font-semibold">Bs {{ number_format($detalle->subtotal, 2) }}</p>
                         </div>
                         @endforeach
 
